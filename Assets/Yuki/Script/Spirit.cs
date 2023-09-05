@@ -5,12 +5,19 @@ using UnityEngine;
 public class Spirit : MonoBehaviour
 {
 
-    [SerializeField] bool blowAwayFlag = false;//右吹っ飛ばしフラグ
- 
+    private float speed;//実際に使う速度
+
+    private bool eriaFlag = false;//吹っ飛ばし範囲に居るかフラグ
+  
+    
+  
 
     //インスペクタ表示変数
-    [SerializeField] float moveSpeed = 0.3f;//速度
-    [SerializeField] float power = 1.0f;//吹っ飛ばす力
+    [SerializeField] private float moveSpeed;//速度
+    [SerializeField] private float power;//吹っ飛ばす力(強)
+    [SerializeField] private float miniPower;//吹っ飛ばす力(弱)
+
+
 
     private Angel angel;
     new Rigidbody2D rigidbody;
@@ -19,6 +26,8 @@ public class Spirit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = moveSpeed;//アドフォース用に速度変数を代入
+
         rigidbody = GetComponent<Rigidbody2D>();
 
 
@@ -36,27 +45,56 @@ public class Spirit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
-        rigidbody.AddForce(Vector2.up * moveSpeed, ForceMode2D.Force);//常時上に移動
+        rigidbody.AddForce(Vector2.up * speed, ForceMode2D.Force);//常時上に移動
 
-
-        if (Input.GetKeyDown(KeyCode.Return) && blowAwayFlag)
+        //弱い仮
+        if (Input.GetKeyDown("z") && eriaFlag)
         {
+
+            rigidbody.gravityScale = 0;
+
+            if (angel.rightFlag)
+            {
+                rigidbody.AddForce(Vector2.right * miniPower, ForceMode2D.Force);
+
+
+            }
+
+
+            if (angel.leftFlag)
+            {
+                rigidbody.AddForce(Vector2.left * miniPower, ForceMode2D.Force);
+
+            }
+            eriaFlag = false;
+
+        }
+
+        //強い仮
+        if (Input.GetKeyDown("x") && eriaFlag)
+        {
+            //rigidbody. = false;
+            // blowAwayFlag = true;
+            //rigidbody.AddForce(Vector2.down * power, ForceMode2D.Impulse);
+            rigidbody.gravityScale = 1;
+            speed = 0;
+
             if (angel.rightFlag)
             {
                 rigidbody.AddForce(Vector2.right * power, ForceMode2D.Force);
-              
+
+
             }
 
 
             if (angel.leftFlag)
             {
                 rigidbody.AddForce(Vector2.left * power, ForceMode2D.Force);
-              
+
             }
-            blowAwayFlag = false;
-          
+            eriaFlag = false;
+
         }
 
 
@@ -66,7 +104,7 @@ public class Spirit : MonoBehaviour
 
     private void FixedUpdate()
     {
-      blowAwayFlag = false;
+        eriaFlag = false;
     }
 
 
@@ -77,7 +115,7 @@ public class Spirit : MonoBehaviour
         if (collider.tag == "Player")
         {
 
-            blowAwayFlag = true;
+            eriaFlag = true;
         }
 
 
