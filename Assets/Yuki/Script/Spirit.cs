@@ -5,14 +5,14 @@ using UnityEngine;
 public class Spirit : MonoBehaviour
 {
 
-
-
-
+    [SerializeField] bool blowAwayFlag = false;//右吹っ飛ばしフラグ
+ 
 
     //インスペクタ表示変数
     [SerializeField] float moveSpeed = 0.3f;//速度
     [SerializeField] float power = 1.0f;//吹っ飛ばす力
 
+    private Angel angel;
     new Rigidbody2D rigidbody;
 
 
@@ -20,81 +20,66 @@ public class Spirit : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+
+
+        if (angel == null)
+        {
+
+            GameObject Player = GameObject.FindGameObjectWithTag("Player");
+            angel = Player.GetComponent<Angel>();
+
+
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         rigidbody.AddForce(Vector2.up * moveSpeed, ForceMode2D.Force);//常時上に移動
 
 
-
-    }
-
-
-
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-
-        if (collider.tag == "RightAtackEria")
+        if (Input.GetKeyDown("z") && blowAwayFlag)
         {
-            Debug.Log("入った");
-
-            if (Input.GetKeyDown("z"))
+            if (angel.rightFlag)
             {
-
                 rigidbody.AddForce(Vector2.right * power, ForceMode2D.Force);
-
-
+              
             }
 
-        }
 
-        if (collider.tag == "LeftAtackEria")
-        {
-
-            if (Input.GetKeyDown("z"))
+            if (angel.leftFlag)
             {
-
                 rigidbody.AddForce(Vector2.left * power, ForceMode2D.Force);
-
-
+              
             }
-
+            blowAwayFlag = false;
+          
         }
+
 
 
 
     }
-    void OnCollisionEnter2D(Collision2D other)
+
+    private void FixedUpdate()
+    {
+      blowAwayFlag = false;
+    }
+
+
+
+    private void OnTriggerStay2D(Collider2D collider)
     {
 
-        if (other.gameObject.tag == "RightAtackEria")
-        {
-            Debug.Log("入った");
-
-            if (Input.GetKeyDown("z"))
-            {
-
-                rigidbody.AddForce(Vector2.right * power, ForceMode2D.Force);
-
-
-            }
-
-        }
-
-        if (other.gameObject.tag == "LeftAtackEria")
+        if (collider.tag == "Player")
         {
 
-            if (Input.GetKeyDown("z"))
-            {
-
-                rigidbody.AddForce(Vector2.left * power, ForceMode2D.Force);
-
-
-            }
-
+            blowAwayFlag = true;
         }
+
 
 
 

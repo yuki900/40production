@@ -21,6 +21,9 @@ public class Angel : MonoBehaviour
     float speedx;//プレイヤーx移動速度
     float speedy;//プレイヤーy移動速度
 
+    //魂に渡す方向用フラグ
+    public bool rightFlag = false;//右方向吹っ飛ばしフラグ
+    public bool leftFlag = false;//左方向吹っ飛ばしフラグ
 
 
     //インスペクタ表示変数
@@ -74,18 +77,25 @@ public class Angel : MonoBehaviour
 
         // 上・下
         float y = Input.GetAxisRaw("Vertical");
+
         //エネミーの向きに応じて移動処理
 
         if (x > 0f)
         {
             //右
             direction = Direction.Right;
+            //魂に渡す方向用フラグを変更
+            rightFlag = true;
+            leftFlag = false;
             Moveupdate();
         }
         else if (x < 0f)
         {
             //左
             direction = Direction.Left;
+            //魂に渡す方向用フラグを変更
+            rightFlag = false;
+            leftFlag = true;
             Moveupdate();
         }
         else
