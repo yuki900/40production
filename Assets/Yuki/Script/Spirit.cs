@@ -41,7 +41,7 @@ public class Spirit : MonoBehaviour
         rigidbody.AddForce(Vector2.up * moveSpeed, ForceMode2D.Force);//íã‚ÉˆÚ“®
 
 
-        if (Input.GetKeyDown("z") && blowAwayFlag)
+        if (Input.GetKeyDown(KeyCode.Return) && blowAwayFlag)
         {
             if (angel.rightFlag)
             {
