@@ -12,7 +12,7 @@ public class HighscoreRanking : MonoBehaviour
     private TextMeshProUGUI textMeshPro;
 
     // 記録表示の書式
-    private const string RECORD_TEXT_FORMAT = "{0}位 - {1}点\n";
+    private const string RECORD_TEXT_FORMAT = "{0}位 : {1}点\n";
 
     // 表示する記録の数
     private const int RECORD_NUM = 3;
