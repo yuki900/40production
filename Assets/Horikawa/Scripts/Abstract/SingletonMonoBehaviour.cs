@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SingletonMonoBehaviour<T> : MonoBehaviour 
+public abstract class SingletonMonoBehaviour<T> : AdvancedMonoBehaviour
     where T : MonoBehaviour
 {
     private static T instance;
@@ -17,7 +17,6 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour
                 if (instance == null)
                 {
                     Debug.LogError("Component \"" + typeof(T).Name + "\" is not found.");
-                    return null;
                 }
             }
 
@@ -27,13 +26,13 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if(instance == this)
+        // 他のGameObjectにアタッチされているか調べる
+        if (this != Instance)
         {
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
+            // アタッチされている場合は破棄する
             Destroy(this);
+            return;
         }
+        DontDestroyOnLoad(gameObject);
     }
 }

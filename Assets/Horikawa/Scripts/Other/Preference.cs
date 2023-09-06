@@ -81,6 +81,12 @@ namespace K_Librarys
         /// <param name="_key">キー</param>
         private static void SaveInternal<T>(T _saveData, string _key)
         {
+            //if(!typeof(T).IsSerializable)
+            //{
+            //    Debug.LogError("型\"" + typeof(T).Name + "\"はシリアル化できません。セーブに失敗しました。");
+            //    return;
+            //}
+
             // キーが無効な場合エラーログを出してreturnする
             if (!IsValidKey(_key))
             {
@@ -221,7 +227,7 @@ namespace K_Librarys
             isEditor = true;
 #endif
             path += "/" + (isEditor ? EDITOR_DIRECTRY_NAME : BUILD_DIRECTRY_NAME);
-
+            
 
             // 保存先フォルダの中にjson型のファイルとして保存する
             return path + "/" + _key + ".json";
@@ -285,9 +291,14 @@ namespace K_Librarys
             // パスからフォルダ情報を生成
             DirectoryInfo directoryInfo = new(DIRECTRY_PATH);
 
+            // 中身のファイルを全て削除する
+            //foreach (FileInfo fileInfo in directoryInfo.GetFiles())
+            //{
+            //    fileInfoDelete();
+            //}
             foreach (DirectoryInfo directryInfo in directoryInfo.GetDirectories())
             {
-                directryInfo.Delete(true);
+                directryInfo.Delete();
             }
         }
     }
