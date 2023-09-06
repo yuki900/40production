@@ -218,6 +218,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VibrateButton
       objectReference: {fileID: 0}
+    - target: {fileID: 4627521524255113933, guid: 9a36f17e49d8d834d81b676db4135c5e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4627521524606496069, guid: 9a36f17e49d8d834d81b676db4135c5e, type: 3}
       propertyPath: m_text
       value: Vibrate
@@ -842,11 +846,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4747468161829502306, guid: 09386e58dc1eeab4dba68bd6160876aa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: -70
       objectReference: {fileID: 0}
     - target: {fileID: 6786045062786212310, guid: 09386e58dc1eeab4dba68bd6160876aa, type: 3}
       propertyPath: m_text
       value: "\u30B2\u30FC\u30E0\u518D\u958B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001167142371058008, guid: 09386e58dc1eeab4dba68bd6160876aa, type: 3}
+      propertyPath: selectAxis
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09386e58dc1eeab4dba68bd6160876aa, type: 3}

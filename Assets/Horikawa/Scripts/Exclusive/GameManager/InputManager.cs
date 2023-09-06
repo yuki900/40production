@@ -10,7 +10,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     private InputAction directionInputAction;
     // 方向入力時のイベント
     [HideInInspector]
-    public UnityEvent directionEvent;
+    public UnityEvent<Vector2> directionEvent;
 
     // ポーズ入力アクション
     [SerializeField]
@@ -18,20 +18,6 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     // ポーズ入力時のイベント
     [HideInInspector]
     public UnityEvent pauseEvent;
-
-    // 上入力アクション
-    [SerializeField]
-    private InputAction upInputAction;
-    // ポーズ入力時のイベント
-    [HideInInspector]
-    public UnityEvent upEvent;
-
-    // 下入力アクション
-    [SerializeField]
-    private InputAction downInputAction;
-    // ポーズ入力時のイベント
-    [HideInInspector]
-    public UnityEvent downEvent;
 
     // 決定入力アクション
     [SerializeField]
@@ -45,16 +31,12 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         // 入力アクションを有効化
         directionInputAction.Enable();
         pauseInputAction.Enable();
-        upInputAction.Enable();
-        downInputAction.Enable();
         decideInputAction.Enable();
 
         // コールバックを追加
-        directionInputAction.performed += DirectionInvoke;
-        pauseInputAction.performed  += PauseInvoke;
-        upInputAction.performed     += UpInvoke;
-        downInputAction.performed   += DownInvoke;
-        decideInputAction.performed += DecideInvoke;
+        directionInputAction.performed  += DirectionInvoke;
+        pauseInputAction.performed      += PauseInvoke;
+        decideInputAction.performed     += DecideInvoke;
     }
 
     private void OnDisable()
@@ -62,24 +44,16 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         // 入力アクションを無効化
         directionInputAction.Disable();
         pauseInputAction.Disable();
-        upInputAction.Disable();
-        downInputAction.Disable();
         decideInputAction.Disable();
 
         // コールバックを削除
-        pauseInputAction.performed  -= PauseInvoke;
-        upInputAction.performed     -= UpInvoke;
-        downInputAction.performed   -= DownInvoke;
-        decideInputAction.performed -= DecideInvoke;
-    }
-
-    private void Update()
-    {
-        
+        directionInputAction.performed  -= DirectionInvoke;
+        pauseInputAction.performed      -= PauseInvoke;
+        decideInputAction.performed     -= DecideInvoke;
     }
 
     /// <summary>
-    /// 軸取得(平滑化なし)
+    /// 軸取得(平滑化なし、正規化あり)
     /// </summary>
     public Vector2 GetAxis => getAxis;
     // フィールド
@@ -132,8 +106,12 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
 
     private void DirectionInvoke(InputAction.CallbackContext _context)
     {
+        Vector2 readVector = _context.ReadValue<Vector2>();
+
         // 軸更新
-        getAxis = _context.ReadValue<Vector2>();
+        getAxis = readVector;
+        // イベント実行
+        directionEvent.Invoke(readVector);
     }
 
     // ポーズ入力時のコールバック
@@ -141,20 +119,6 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     {
         // イベント実行
         pauseEvent.Invoke();
-    }
-
-    // 上入力時のコールバック
-    private void UpInvoke(InputAction.CallbackContext _context)
-    {
-        // イベント実行
-        upEvent.Invoke();
-    }
-
-    // 下入力時のコールバック
-    private void DownInvoke(InputAction.CallbackContext _context)
-    {
-        // イベント実行
-        downEvent.Invoke();
     }
 
     // 決定入力時のコールバック
