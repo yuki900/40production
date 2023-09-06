@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GodLight
   - ScoreEria
+  - ScoreManeger
   layers:
   - Default
   - TransparentFX

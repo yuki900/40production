@@ -14,10 +14,10 @@ public class Spirit : MonoBehaviour
   
 
     //インスペクタ表示変数
-    [SerializeField] private float moveSpeed;//速度
-    [SerializeField] private float power;//吹っ飛ばす力(強)
-    [SerializeField] private float miniPower;//吹っ飛ばす力(弱)
-
+    [SerializeField][Tooltip("上昇速度")] private float moveSpeed;//速度
+    [SerializeField][Tooltip("吹っ飛ばす力(強)")] private float power;//吹っ飛ばす力(強)
+    [SerializeField][Tooltip("吹っ飛ばす力(弱)")] private float miniPower;//吹っ飛ばす力(弱)
+    [SerializeField][Tooltip("オンにすると悪霊")] private bool evile = false;//悪人か善人か
 
 
     private Angel angel;
@@ -150,7 +150,18 @@ public class Spirit : MonoBehaviour
         //スコア範囲に入ったらスコアを加算し、自身を削除
         if (collider.tag == "ScoreEria")
         {
-            scoreManeger.score += 100;
+            //善人の時
+            if (!evile)
+            {
+
+                scoreManeger.score += 100;
+            }
+            //悪人の時
+            if (evile)
+            {
+
+                scoreManeger.score -= 1000;
+            }
             Destroy(gameObject);
 
         }

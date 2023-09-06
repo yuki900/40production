@@ -18,8 +18,8 @@ public class Angel : MonoBehaviour
     //非公開変数
     Direction direction = Direction.Stopx;//プレイヤー方向
 
-    float speedx;//プレイヤーx移動速度
-    float speedy;//プレイヤーy移動速度
+    private float speedx;//プレイヤーx移動速度
+    private float speedy;//プレイヤーy移動速度
 
     //魂に渡す方向用フラグ
     public bool rightFlag = false;//右方向吹っ飛ばしフラグ
@@ -27,17 +27,18 @@ public class Angel : MonoBehaviour
 
 
     //インスペクタ表示変数
-    [SerializeField] float moveSpeed = 8;//速度
-                                        
+    [SerializeField][Tooltip("移動速度")] float moveSpeed = 8;//速度
+ 
 
     new Rigidbody2D rigidbody;
 
-
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -46,7 +47,7 @@ public class Angel : MonoBehaviour
         Moveupdate();
 
 
-
+        
 
 
 
@@ -84,6 +85,10 @@ public class Angel : MonoBehaviour
         {
             //右
             direction = Direction.Right;
+            //画像の向きを変更
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+
             //魂に渡す方向用フラグを変更
             rightFlag = true;
             leftFlag = false;
@@ -93,6 +98,10 @@ public class Angel : MonoBehaviour
         {
             //左
             direction = Direction.Left;
+            //画像の向きを変更
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+
             //魂に渡す方向用フラグを変更
             rightFlag = false;
             leftFlag = true;
@@ -109,19 +118,60 @@ public class Angel : MonoBehaviour
         {
             //上
             direction = Direction.Up;
+            //画像の向きを変更
+            //左右移動の反転で角度を修正
+            //左向きの時
+            if (transform.localScale.x >= 1.0f)
+            {
+                transform.localRotation = Quaternion.Euler(0, 0, -55);
+
+
+            }
+            //左
+            else if (transform.localScale.x <= -1.0f)
+            {
+                transform.localRotation = Quaternion.Euler(0, 0, 55);
+
+
+            }
+
+
             Moveupdate();
         }
         else if (y < 0f)
         {
             //下
             direction = Direction.Down;
+            //画像の向きを変更
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
             Moveupdate();
         }
         else
         {
             //止まっている
             speedy = 0;
+            //画像の向きを変更
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
+
+
+
+        //アニメ系処理
+        //左右どちらかの移動フラグがオンの時、アニメ変更フラグをオンに
+        if (x != 0||y!=0)
+        {
+            animator.SetBool("Move", true);//アニメ変更処理
+        }
+        else if (x == 0 && y == 0)
+        {
+
+            animator.SetBool("Move", false);//アニメ変更処理
+
+        }
+
+
+
+
 
 
 
