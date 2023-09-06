@@ -9,9 +9,15 @@ public class Spirit : MonoBehaviour
 
     private bool eriaFlag = false;//吹っ飛ばし範囲に居るかフラグ
     private bool lightFlag = false;//光範囲に居るかフラグ
-  
-    
-  
+
+
+    //悪魔関係
+    private bool eatStart = false;//悪魔に食われる開始
+    private Vector2 devilPosition;//悪魔の座標
+
+
+    // private bool atackFlag = false;//攻撃フラグ
+
 
     //インスペクタ表示変数
     [SerializeField][Tooltip("上昇速度")] private float moveSpeed;//速度
@@ -21,6 +27,7 @@ public class Spirit : MonoBehaviour
 
 
     private Angel angel;
+    public Devil devil;
 
     private ScoreManeger scoreManeger;
 
@@ -53,7 +60,7 @@ public class Spirit : MonoBehaviour
 
 
         }
-
+       
     }
 
     // Update is called once per frame
@@ -68,6 +75,18 @@ public class Spirit : MonoBehaviour
            // rigidbody.velocity = new Vector2(0, speed);
         }
         else rigidbody.gravityScale = 1;
+
+
+        //悪魔に引き寄せられる
+        if (eatStart)
+        {
+
+
+            float speed = 0.5f; // 移動の速度を指定
+            Transform objectTransform = gameObject.GetComponent<Transform>(); // ゲームオブジェクトのTransformコンポーネントを取得
+            objectTransform.position = Vector3.Lerp(objectTransform.position, devilPosition, speed * Time.deltaTime); // 目的の位置に移動
+        }
+
 
 
 
@@ -132,6 +151,22 @@ public class Spirit : MonoBehaviour
     }
 
 
+    //悪魔に引き寄せられる時の関数
+    public void DevilEat(Vector2 targetPosition)
+    {
+
+        eatStart = true;//食われる動作開始フラグ
+        devilPosition = targetPosition;
+   
+
+    }
+
+
+
+
+
+
+
 
     private void OnTriggerStay2D(Collider2D collider)
     {
@@ -145,7 +180,7 @@ public class Spirit : MonoBehaviour
         if (collider.tag == "GodLight")
         {
             lightFlag = true;
-         
+
         }
         //スコア範囲に入ったらスコアを加算し、自身を削除
         if (collider.tag == "ScoreEria")
@@ -154,21 +189,53 @@ public class Spirit : MonoBehaviour
             if (!evile)
             {
 
-                scoreManeger.score += 100;
+                scoreManeger.score += 100;//スコアを加算
             }
             //悪人の時
             if (evile)
             {
 
-                scoreManeger.score -= 1000;
+                scoreManeger.score -= 1000;//スコアを減少
             }
             Destroy(gameObject);
 
         }
 
-
-
-        
+       
     }
+
+
+
+
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        
+        //悪霊が悪魔にぶつかった時
+        if (collider.tag == "Devil" && evile)
+        {
+            if (devil == null)
+            {
+                devil = collider.gameObject.GetComponent<Devil>();//悪魔のスクリプト
+            }
+            if (devil != null)
+            {
+                scoreManeger.score += 2000;//スコアを加算
+                devil.Damege();//落下関数を呼び出し
+            }
+        }
+        //善の魂が悪霊に食われる時
+        if (collider.tag == "Devil" && !evile)
+        {
+            scoreManeger.life--;//ダメージを受ける
+            Destroy(gameObject);//消滅させる
+
+        }
+
+    } 
+
+
+
+
 
 }
