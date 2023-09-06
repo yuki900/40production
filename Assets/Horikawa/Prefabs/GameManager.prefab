@@ -59,6 +59,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a46db3c0178504da7860738295e2d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionInputAction:
+    m_Name: Direction Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fed936bc-d0ab-43fa-a03e-7c6787b6e2f0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: Vector2ArrowKey
+      m_Id: 2d91f05a-b77d-45ab-a2d3-6120391c9931
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 4
+    - m_Name: up
+      m_Id: d27dd132-6cf2-4a73-b44d-05f9e2308a19
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 066a7cf2-bc80-41cd-a190-02b62a0b341d
+      m_Path: <Keyboard>/downArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 08190135-3cb9-4458-b90f-7a9afe380faf
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: right
+      m_Id: f48af453-918a-4101-ae97-d9aa20af8983
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: Vector2Cross
+      m_Id: 4f08e89c-3859-46e3-af47-07532b9ddec5
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 2529f15a-1fa3-4db9-87d6-4d0009c21922
+      m_Path: <Gamepad>/dpad/up
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 8f092aeb-de06-4880-853b-4a0996085c14
+      m_Path: <Gamepad>/dpad/down
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 21ce8cc3-dc07-4a1e-97e7-027a3e686464
+      m_Path: <Gamepad>/dpad/left
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 950b0bd8-8f19-4d1c-a48c-195de4e04f0a
+      m_Path: <Gamepad>/dpad/right
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    m_Flags: 0
   pauseInputAction:
     m_Name: Pause Input
     m_Type: 0

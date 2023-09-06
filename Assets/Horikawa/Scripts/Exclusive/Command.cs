@@ -26,6 +26,11 @@ public class Command : MonoBehaviour
         image = GetComponent<Image>();
     }
 
+    private void Start()
+    {
+        InputManager.Instance.decideEvent.AddListener(Decide);
+    }
+
     private void Update()
     {
         if(isSelected)
@@ -51,6 +56,14 @@ public class Command : MonoBehaviour
                     image.color = UNSELECTED_COLOR;
                 }
             }
+        }
+    }
+
+    private void Decide()
+    {
+        if(isSelected)
+        {
+            onDecide?.Invoke();
         }
     }
 }

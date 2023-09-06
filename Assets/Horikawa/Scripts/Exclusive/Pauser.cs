@@ -12,15 +12,15 @@ public class Pauser : MonoBehaviour
     [SerializeField]
     private GameObject pausePanel;
 
-    // ポーズ解除ボタン
+    // ポーズ解除コマンド
     [SerializeField]
-    private Button unpauseButton;
+    private Command unpauseCommand;
 
     private void Start()
     {
         // イベントに関数を追加
         InputManager.Instance.pauseEvent.AddListener(Pause);
-        unpauseButton.onClick.AddListener(Unpause);
+        unpauseCommand.onDecide.AddListener(Unpause);
     }
 
     /// <summary>
