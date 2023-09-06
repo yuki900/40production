@@ -8,6 +8,7 @@ public class Spirit : MonoBehaviour
     private float speed;//実際に使う速度
 
     private bool eriaFlag = false;//吹っ飛ばし範囲に居るかフラグ
+    private bool lightFlag = false;//光範囲に居るかフラグ
   
     
   
@@ -20,6 +21,11 @@ public class Spirit : MonoBehaviour
 
 
     private Angel angel;
+
+    private ScoreManeger scoreManeger;
+
+
+
     new Rigidbody2D rigidbody;
 
 
@@ -34,8 +40,16 @@ public class Spirit : MonoBehaviour
         if (angel == null)
         {
 
-            GameObject Player = GameObject.FindGameObjectWithTag("Player");
-            angel = Player.GetComponent<Angel>();
+            GameObject saveObject = GameObject.FindGameObjectWithTag("Player");
+            angel = saveObject.GetComponent<Angel>();
+
+
+        }
+        if (scoreManeger == null)
+        {
+
+            GameObject saveObject = GameObject.FindGameObjectWithTag("ScoreManeger");
+            scoreManeger = saveObject.GetComponent<ScoreManeger>();
 
 
         }
@@ -45,8 +59,17 @@ public class Spirit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //光の範囲に居る時のみ上に上る
+        //範囲外に行った場合は落ちる
+        if (lightFlag)
+        {
+            rigidbody.gravityScale = 0;
+            rigidbody.AddForce(Vector2.up * speed);//常時上に移動
+           // rigidbody.velocity = new Vector2(0, speed);
+        }
+        else rigidbody.gravityScale = 1;
 
-        rigidbody.AddForce(Vector2.up * speed, ForceMode2D.Force);//常時上に移動
+
 
         //弱い仮
         if (Input.GetKeyDown("z") && eriaFlag)
@@ -105,22 +128,36 @@ public class Spirit : MonoBehaviour
     private void FixedUpdate()
     {
         eriaFlag = false;
+        lightFlag = false;
     }
 
 
 
     private void OnTriggerStay2D(Collider2D collider)
     {
-
+        //プレイヤーの範囲に入ると攻撃可能フラグをオン
         if (collider.tag == "Player")
         {
 
             eriaFlag = true;
         }
+        //光の範囲に居ると、上昇フラグをオン
+        if (collider.tag == "GodLight")
+        {
+            lightFlag = true;
+         
+        }
+        //スコア範囲に入ったらスコアを加算し、自身を削除
+        if (collider.tag == "ScoreEria")
+        {
+            scoreManeger.score += 100;
+            Destroy(gameObject);
+
+        }
 
 
 
-
+        
     }
 
 }

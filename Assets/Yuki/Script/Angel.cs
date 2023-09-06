@@ -30,14 +30,14 @@ public class Angel : MonoBehaviour
     [SerializeField] float moveSpeed = 8;//‘¬“x
                                         
 
-    Rigidbody2D rigid2D;
+    new Rigidbody2D rigidbody;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        rigid2D = GetComponent<Rigidbody2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -171,7 +171,7 @@ public class Angel : MonoBehaviour
 
             }
         }
-        rigid2D.velocity = new Vector2(speedx, speedy);
+        rigidbody.velocity = new Vector2(speedx, speedy);
     }
 
 
