@@ -15,10 +15,19 @@ public abstract class ButtonBase : MonoBehaviour
 
         // イベントに関数を追加
         button.onClick.AddListener(OnClick);
+        InputManager.Instance.decideEvent.AddListener(OnDecide);
     }
 
     /// <summary>
     /// ボタンクリック時に呼び出される関数
     /// </summary>
     protected abstract void OnClick();
+
+    private void OnDecide()
+    {
+        if(button.interactable)
+        {
+            OnClick();
+        }
+    }
 }
