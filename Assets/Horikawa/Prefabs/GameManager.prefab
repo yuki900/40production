@@ -147,7 +147,50 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Direction Input
       m_Flags: 8
+    - m_Name: Vector2LeftStick
+      m_Id: 5cef5b38-90a4-4801-8d0d-0c9f37ead1b3
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 57187d32-fcc0-41a8-92e5-b4add5af2ec5
+      m_Path: <Gamepad>/leftStick/up
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 963f59c4-b76e-4ffc-afb9-6aa0266c72b2
+      m_Path: <Gamepad>/leftStick/down
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 6617514e-c051-4221-a05b-0af221d2356e
+      m_Path: <Gamepad>/leftStick/left
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 83505132-15d6-48ea-99d7-3bd170af2c95
+      m_Path: <Gamepad>/leftStick/right
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Direction Input
+      m_Flags: 8
     m_Flags: 0
+  directionEvent:
+    m_PersistentCalls:
+      m_Calls: []
   pauseInputAction:
     m_Name: Pause Input
     m_Type: 0
@@ -174,62 +217,6 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   pauseEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  upInputAction:
-    m_Name: Up Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 35490c90-aa04-47f9-a0c1-310ecb48ce36
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 4f963f25-f97b-4247-9d83-3ee713747c5a
-      m_Path: <Keyboard>/upArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Up Input
-      m_Flags: 0
-    - m_Name: 
-      m_Id: b7368b08-7e8a-492a-9164-5c664b31af73
-      m_Path: <Gamepad>/leftStick/up
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Up Input
-      m_Flags: 0
-    m_Flags: 0
-  upEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  downInputAction:
-    m_Name: Down Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b8fd2489-3313-41f2-84d2-ea70cb79a089
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: d63d1ffd-9f7f-4795-8a70-a1e7e8dd9846
-      m_Path: <Keyboard>/downArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Down Input
-      m_Flags: 0
-    - m_Name: 
-      m_Id: fd0e372e-3b96-4e3c-a967-b8770ec89e1e
-      m_Path: <Gamepad>/leftStick/down
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Down Input
-      m_Flags: 0
-    m_Flags: 0
-  downEvent:
     m_PersistentCalls:
       m_Calls: []
   decideInputAction:
