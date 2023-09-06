@@ -1,31 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class InputManager : SingletonMonoBehaviour<InputManager>
 {
+    // 方向入力アクション
+    [SerializeField]
+    private InputAction directionInputAction;
+    // 方向入力時のイベント
+    [HideInInspector]
+    public UnityEvent<Vector2> directionEvent;
+
     // ポーズ入力アクション
     [SerializeField]
     private InputAction pauseInputAction;
     // ポーズ入力時のイベント
     [HideInInspector]
     public UnityEvent pauseEvent;
-
-    // 上入力アクション
-    [SerializeField]
-    private InputAction upInputAction;
-    // ポーズ入力時のイベント
-    [HideInInspector]
-    public UnityEvent upEvent;
-
-    // 下入力アクション
-    [SerializeField]
-    private InputAction downInputAction;
-    // ポーズ入力時のイベント
-    [HideInInspector]
-    public UnityEvent downEvent;
 
     // 決定入力アクション
     [SerializeField]
@@ -37,27 +29,35 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     private void OnEnable()
     {
         // 入力アクションを有効化
+        directionInputAction.Enable();
         pauseInputAction.Enable();
-        upInputAction.Enable();
-        downInputAction.Enable();
         decideInputAction.Enable();
 
         // コールバックを追加
-        pauseInputAction.performed  += PauseInvoke;
-        upInputAction.performed     += UpInvoke;
-        downInputAction.performed   += DownInvoke;
-        decideInputAction.performed += DecideInvoke;
+        directionInputAction.performed  += DirectionInvoke;
+        pauseInputAction.performed      += PauseInvoke;
+        decideInputAction.performed     += DecideInvoke;
+    }
+
+    private void OnDisable()
+    {
+        // 入力アクションを無効化
+        directionInputAction.Disable();
+        pauseInputAction.Disable();
+        decideInputAction.Disable();
+
+        // コールバックを削除
+        directionInputAction.performed  -= DirectionInvoke;
+        pauseInputAction.performed      -= PauseInvoke;
+        decideInputAction.performed     -= DecideInvoke;
     }
 
     /// <summary>
-    /// 軸取得
+    /// 軸取得(平滑化なし、正規化あり)
     /// </summary>
-    public Vector2 GetAxis => new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-    /// <summary>
-    /// 軸取得(平滑化なし)
-    /// </summary>
-    public Vector2 GetAxisRaw => new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    public Vector2 GetAxis => getAxis;
+    // フィールド
+    private Vector2 getAxis = new();
 
     /// <summary>
     /// コントローラー振動
@@ -104,25 +104,21 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         InputSystem.ResetHaptics();
     }
 
+    private void DirectionInvoke(InputAction.CallbackContext _context)
+    {
+        Vector2 readVector = _context.ReadValue<Vector2>();
+
+        // 軸更新
+        getAxis = readVector;
+        // イベント実行
+        directionEvent.Invoke(readVector);
+    }
+
     // ポーズ入力時のコールバック
     private void PauseInvoke(InputAction.CallbackContext _context)
     {
         // イベント実行
         pauseEvent.Invoke();
-    }
-
-    // 上入力時のコールバック
-    private void UpInvoke(InputAction.CallbackContext _context)
-    {
-        // イベント実行
-        upEvent.Invoke();
-    }
-
-    // 下入力時のコールバック
-    private void DownInvoke(InputAction.CallbackContext _context)
-    {
-        // イベント実行
-        downEvent.Invoke();
     }
 
     // 決定入力時のコールバック

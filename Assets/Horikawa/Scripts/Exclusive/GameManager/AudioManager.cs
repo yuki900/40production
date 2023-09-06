@@ -14,7 +14,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     }
 
     // セーブキーの共通文字列
-    private const string VOLUME_VALUE_SAVE_KEY_BASE = "VolumeValue";
+    private const string VOLUME_VALUE_SAVE_KEY_BASE = "VolumeValueSave";
 
     // オーディオミキサー
     [SerializeField]

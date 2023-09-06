@@ -107,7 +107,7 @@ namespace K_Librarys
             SaveData<T> saveDataClass = new(_saveData);
 
             // jsonデータを生成
-            string jsonData = JsonUtility.ToJson(saveDataClass);
+            string jsonData = JsonUtility.ToJson(saveDataClass, true);
 
             // ライターに書き込む
             streamWriter.Write(jsonData);
