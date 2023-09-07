@@ -35,6 +35,12 @@ public class ScoreManeger : MonoBehaviour
     [SerializeField] private Text missText;//UI表示用
     [SerializeField] private Text comboText;//UI表示用
 
+    [HideInInspector] public int magnification=1;//コンボ時の倍率用変数
+
+    [Header("倍率")]
+    [SerializeField] int[] times = new int[20];//具体的な倍率
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,10 +83,83 @@ public class ScoreManeger : MonoBehaviour
         }
 
 
-
-
-
-
+        //コンボ数に応じたスコア倍率の変化
+        if (combo <= 15)
+        {
+            magnification =times[0];
+        }
+        else if (combo >= 16&&combo<=20)
+        {
+            magnification = times[1];
+        }
+        else if (combo >= 21 && combo <= 25)
+        {
+            magnification = times[2];
+        }
+        else if (combo >= 26 && combo <= 30)
+        {
+            magnification = times[3];
+        }
+        else if (combo >= 31 && combo <= 35)
+        {
+            magnification = times[4];
+        }
+        else if (combo >= 36 && combo <= 40)
+        {
+            magnification = times[5];
+        }
+        else if (combo >= 41 && combo <= 45)
+        {
+            magnification = times[6];
+        }
+        else if (combo >= 46 && combo <=50)
+        {
+            magnification = times[7];
+        }
+        else if (combo >= 51 && combo <= 55)
+        {
+            magnification = times[8];
+        }
+        else if (combo >= 56 && combo <= 60)
+        {
+            magnification = times[9];
+        }
+        else if (combo >= 60 && combo <= 65)
+        {
+            magnification = times[10];
+        }
+        else if (combo >= 66 && combo <= 70)
+        {
+            magnification = times[11];
+        }
+        else if (combo >= 71 && combo <= 75)
+        {
+            magnification = times[12];
+        }
+        else if (combo >= 75 && combo <= 80)
+        {
+            magnification = times[13];
+        }
+        else if (combo >= 81 && combo <= 85)
+        {
+            magnification = times[14];
+        }
+        else if (combo >= 86 && combo <= 90)
+        {
+            magnification = times[15];
+        }
+        else if (combo >= 91 && combo <= 95)
+        {
+            magnification = times[16];
+        }
+        else if (combo >= 96 && combo <= 100)
+        {
+            magnification = times[17];
+        }
+        else if (combo >= 101)
+        {
+            magnification = times[18];
+        }
 
     }
 }

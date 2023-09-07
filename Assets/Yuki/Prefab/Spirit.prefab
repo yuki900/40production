@@ -123,9 +123,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniPower: 30
   power: 400
-  evile: 0
-  minSpede: 0.05
-  maxSpede: 0.15
+  evil: 0
+  minSpeed: 0.02
+  maxSpeed: 0.08
 --- !u!58 &5639599126186452964
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -139,9 +139,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.046789013, y: -0.24504583}
+  m_Offset: {x: -0.04678905, y: -0.1402924}
   serializedVersion: 2
-  m_Radius: 0.37954125
+  m_Radius: 0.6293378
 --- !u!95 &1074228250528190615
 Animator:
   serializedVersion: 4

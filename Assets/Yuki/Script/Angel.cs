@@ -48,19 +48,18 @@ public class Angel : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        
+        // イベントに関数を追加
+        InputManager.Instance.weakAttackEvent.AddListener(WeakAttackEvent);
+        InputManager.Instance.strongAttackEvent.AddListener(StrongAttackEvent);
     }
 
-    // Update is called once per frame
-    void Update()
+    //弱攻撃
+    void WeakAttackEvent()
     {
-        
-        
-            Moveupdate();
-        
-
-
+       
         //攻撃アニメを表示
-        if (Input.GetKeyDown("z")&&!keyBlock)
+        if (!keyBlock)
         {
             if (!atackFlag)
             {
@@ -71,7 +70,13 @@ public class Angel : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown("x")&&!keyBlock)
+    }
+
+
+    void StrongAttackEvent()
+    {
+
+        if (!keyBlock)
         {
             if (!atackFlag)
             {
@@ -80,8 +85,24 @@ public class Angel : MonoBehaviour
                 atackFlag = true;
                 keyBlock = true;
             }
-            
+
         }
+
+
+    }
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+        
+            Moveupdate();
+        
+
+
+       
+
 
 
         if (atackFlag)
@@ -103,12 +124,6 @@ public class Angel : MonoBehaviour
 
         keyBlock = false;
     }
-
-    void FixedUpdate()
-    {
-
-    }
-
 
 
     void Moveupdate()
