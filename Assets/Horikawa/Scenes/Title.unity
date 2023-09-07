@@ -737,10 +737,27 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6980882869186165641, guid: dbdf777550477ae47b43c26f2e1e17c9, type: 3}
   m_PrefabInstance: {fileID: 830045457}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 830045460}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2378444235e56a54fb40ad3224bfc15f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &830045460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6980882869186165645, guid: dbdf777550477ae47b43c26f2e1e17c9, type: 3}
+  m_PrefabInstance: {fileID: 830045457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &830045461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830045460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd68e7fadbdcf4b40a32b3dd7d02426b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &844439737
@@ -759,7 +776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &844439738
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1553,6 +1570,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
+--- !u!1 &1811586714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6980882869186165645, guid: dbdf777550477ae47b43c26f2e1e17c9, type: 3}
+  m_PrefabInstance: {fileID: 1942018210}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1857207274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,12 +1968,25 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6980882869186165641, guid: dbdf777550477ae47b43c26f2e1e17c9, type: 3}
   m_PrefabInstance: {fileID: 1942018210}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1811586714}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2378444235e56a54fb40ad3224bfc15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1942018215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811586714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399e9f5c266fd7b4db728fb58bfe9650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadSceneName: Ingame
 --- !u!1 &2024781157
 GameObject:
   m_ObjectHideFlags: 0

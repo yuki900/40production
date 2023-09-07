@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     // スコア記録
-    public int score = 74;
+    public int score;
 
     private void Start()
     {
@@ -17,8 +17,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     public static void Quit()
     {
-//#if UNITY_EDITOR
-#if false
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();

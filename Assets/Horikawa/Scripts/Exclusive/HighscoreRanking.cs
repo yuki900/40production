@@ -15,15 +15,15 @@ public class HighscoreRanking : MonoBehaviour
     private const string RECORD_TEXT_FORMAT = "{0}位 : {1}点\n";
 
     // 表示する記録の数
-    private const int RECORD_NUM = 3;
+    public static readonly int RECORD_NUM = 3;
 
     // 記録のセーブキー
-    private const string RECORD_SAVE_KEY = "HighscoreRecordSave";
+    public static readonly string RECORD_SAVE_KEY = "HighscoreRecordSave";
 
     // セーブデータ
     int[] saveData;
 
-    private void Start()
+    private void Awake()
     {
         saveData = Preference.LoadArray(RECORD_SAVE_KEY, new int[RECORD_NUM]);
 
@@ -35,7 +35,5 @@ public class HighscoreRanking : MonoBehaviour
         }
 
         textMeshPro.text = rankingText;
-
-        //Preference.SaveArray(new int[RECORD_NUM] { 5071, 3072, 1872 }, RECORD_SAVE_KEY);
     }
 }
