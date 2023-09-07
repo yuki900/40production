@@ -12,7 +12,7 @@ public class ResultManager : MonoBehaviour
 
     // ハイスコアランキングUI
     [SerializeField]
-    private GameObject highScoreRanking;
+    private HighscoreRanking highScoreRanking;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class ResultManager : MonoBehaviour
         RankingUpdate(score);
 
         // ランキングを表示
-        //highScoreRanking.SetActive(true);
+        highScoreRanking.gameObject.SetActive(true);
     }
 
     // ランキング更新処理
@@ -49,10 +49,12 @@ public class ResultManager : MonoBehaviour
                 // 現在のスコアを反映、保存して終了
                 scoreRecords[rank] = _score;
                 Preference.SaveArray(scoreRecords, HighscoreRanking.RECORD_SAVE_KEY);
+                highScoreRanking.newRecordIndex = rank;
                 break;
             }
             else if(_score == scoreRecords[rank])
             {
+                highScoreRanking.newRecordIndex = rank;
                 break;
             }
         }
