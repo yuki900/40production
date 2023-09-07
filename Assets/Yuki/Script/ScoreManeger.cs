@@ -8,6 +8,12 @@ public class ScoreManeger : MonoBehaviour
     public float score = 0;//スコア
     public float miss = 0;//ミス回数
     public float combo = 0;//コンボ回数
+
+    [SerializeField][Tooltip("上がるスコア")] public int scoreUp;
+    [SerializeField][Tooltip("下がるスコア")] public int scoreDown;
+    [SerializeField][Tooltip("悪魔で上がるスコア")] public int scoreUpDevil;
+
+
     [SerializeField] private Text scoreText;//UI表示用
     [SerializeField] private Text missText;//UI表示用
     [SerializeField] private Text comboText;//UI表示用

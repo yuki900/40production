@@ -121,10 +121,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8a3953fe9aabed4a859974e51d8b893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.05
-  power: 600
   miniPower: 30
+  power: 400
   evile: 1
+  minSpede: 0.1
+  maxSpede: 0.5
   devil: {fileID: 0}
 --- !u!58 &5015690314899132184
 CircleCollider2D:

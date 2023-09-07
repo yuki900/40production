@@ -14,47 +14,64 @@ public class Devil : MonoBehaviour
 
 
 
+
+
+
     private Spirit spirite;
 
     new Rigidbody2D rigidbody;
 
+    Animator animator;
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-
+        animator = GetComponent<Animator>();
 
         //最も近かったオブジェクトを取得
         nearObj = serchTag(gameObject, "Spirit");
-        //関数を呼ぶ為にスクリプトも取得
-        spirite = nearObj.GetComponent<Spirit>();
+        if (nearObj != null)
+        {
+            
+            //関数を呼ぶ為にスクリプトも取得
+            spirite = nearObj.GetComponent<Spirit>();
+        }
+        animator.SetBool("Ded", false);//落下演出
     }
 
     // Update is called once per frame
     void Update()
     {
         timeCount += Time.deltaTime;//時間を経過させる
-
+      
         if (timeCount >= time)
         {
+            animator.SetBool("Eat", false);//アニメ変更処理
             //最も近かったオブジェクトを取得
             nearObj = serchTag(gameObject, "Spirit");
-            //関数を呼ぶ為にスクリプトも取得
-            spirite = nearObj.GetComponent<Spirit>();
+            
+            if (nearObj != null)
+            {
+                
+                //関数を呼ぶ為にスクリプトも取得
+                spirite = nearObj.GetComponent<Spirit>();
 
-            // 目的の位置の座標を指定
-            Vector2 targetPosition = new Vector2(gameObject.transform.position.x, 
-                                                 gameObject.transform.position.y ); 
+            
+                // 目的の位置の座標を指定
+                Vector2 targetPosition = new Vector2(gameObject.transform.position.x,
+                                                     gameObject.transform.position.y);
 
-            //魂側のスクリプトから移動させる
-            spirite.DevilEat(targetPosition);
-            //経過時間を初期化
-            timeCount = 0;
+                //魂側のスクリプトから移動させる
+                spirite.DevilEat(targetPosition);
+                //経過時間を初期化
+                timeCount = 0;
+            }
         }
 
         if (follFlag)
         {
             rigidbody.gravityScale = 1;//重力をオンにして落下させる
-            transform.localScale = new Vector3(1f, -1f, 1f);//仮落下演出
+            animator.SetBool("Ded", true);//落下演出
             spirite.DevilEatReset();
         }
 
@@ -71,7 +88,13 @@ public class Devil : MonoBehaviour
         
     }
 
-
+    //悪霊をぶつけられた時
+    public void Eaten()
+    {
+        //アニメを変更して即戻す
+        animator.SetBool("Eat", true);//アニメ変更処理
+        
+    }
 
 
 

@@ -11,7 +11,6 @@ public class Spirit : MonoBehaviour
     private bool lightFlag = false;//光範囲に居るかフラグ
     private Vector2 goalPosition;//光の座標
 
-    private bool atack=false;//飛ばされた
 
     private int yPosition = 16;//移動位置指定用変数
 
@@ -21,15 +20,18 @@ public class Spirit : MonoBehaviour
     private  bool eatStart = false;//悪魔に食われる開始
     private Vector2 devilPosition;//悪魔の座標
 
-
-    // private bool atackFlag = false;//攻撃フラグ
-
+    //スコア
+    private int scoreUp;
+    private int scoreDown;
+    private int scoreUpDevil;
 
     //インスペクタ表示変数
-    [SerializeField][Tooltip("上昇速度")] private float moveSpeed;//速度
-    [SerializeField][Tooltip("吹っ飛ばす力(強)")] private float power;//吹っ飛ばす力(強)
     [SerializeField][Tooltip("吹っ飛ばす力(弱)")] private float miniPower;//吹っ飛ばす力(弱)
+    [SerializeField][Tooltip("吹っ飛ばす力(弱)")] private float power;//吹っ飛ばす力(強)
     [SerializeField][Tooltip("オンにすると悪霊")] private bool evile = false;//悪人か善人か
+
+    [SerializeField][Tooltip("最小速度")] private float minSpede;
+    [SerializeField][Tooltip("最大速度")] private float maxSpede;
 
 
     private Angel angel;
@@ -45,7 +47,6 @@ public class Spirit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = moveSpeed;//アドフォース用に速度変数を代入
 
         rigidbody = GetComponent<Rigidbody2D>();
 
@@ -66,28 +67,40 @@ public class Spirit : MonoBehaviour
 
 
         }
+
+        float rnd = Random.Range(minSpede, maxSpede);//速度を最小最大の範囲からランダムに決定
+        speed = rnd;//実際の速度を代入
         goalPosition = new Vector2(gameObject.transform.position.x, yPosition);//魂が向かう位置を設定
-    }
+
+
+
+        //スコアマネージャーからスコア関係の数値を取得
+        scoreUp= scoreManeger.scoreUp;
+        scoreDown = scoreManeger.scoreDown;
+        scoreUpDevil = scoreManeger.scoreUpDevil;
+
+}
 
     // Update is called once per frame
     void Update()
     {
         //光の範囲に居る時のみ上に上る
         //範囲外に行った場合は落ちる
-        if (lightFlag)
+        if (lightFlag && !eatStart)
         {
             rigidbody.gravityScale = 0;//上るために重さなくす
 
+            goalPosition = new Vector2(0, yPosition);//魂が向かう位置を設定
             Transform objectTransform = gameObject.GetComponent<Transform>(); // ゲームオブジェクトのTransformコンポーネントを取得
-            objectTransform.position = Vector3.Lerp(objectTransform.position, goalPosition, speed  * Time.deltaTime); // 目的の位置に移動
+            objectTransform.position = Vector3.Lerp(objectTransform.position, goalPosition, speed * Time.deltaTime); // 目的の位置に移動
 
 
-            // rigidbody.AddForce(Vector2.up *speed,ForceMode2D.Force);//常時上に移動
-            //  rigidbody.velocity = new Vector2(0, speed);//上に移動(加速度を直接操作)
-            //transform.position += new Vector3(0.0f, speed,0.0f);(トランスフォームの操作)
         }
-        else rigidbody.gravityScale = 1;//重さを操作して落とす
-
+        else if (!lightFlag && !eatStart)
+        {
+            rigidbody.gravityScale = 1;//重さを操作して落とす
+          
+        }
 
         //悪魔に引き寄せられる
         if (eatStart)
@@ -233,13 +246,13 @@ public class Spirit : MonoBehaviour
             if (!evile)
             {
 
-                scoreManeger.score += 100;//スコアを加算
+                scoreManeger.score += scoreUp;//スコアを加算
             }
             //悪人の時
             if (evile)
             {
 
-                scoreManeger.score -= 1000;//スコアを減少
+                scoreManeger.score -= scoreDown;//スコアを減少
                 scoreManeger.miss++;//ダメージを受ける
                 scoreManeger.combo = 0;//コンボリセット
                 //マイナスの時は0に
@@ -258,7 +271,7 @@ public class Spirit : MonoBehaviour
             if (evile)
             {
 
-                scoreManeger.score += 100;//スコアを加算
+                scoreManeger.score += scoreUp;//スコアを加算
                 scoreManeger.combo++;//コンボ＋
             }
             
@@ -266,7 +279,7 @@ public class Spirit : MonoBehaviour
             if (!evile)
             {
 
-                scoreManeger.score -= 1000;//スコアを減少
+                scoreManeger.score -= scoreDown;//スコアを減少
                 scoreManeger.miss++;//ダメージを受ける
                 scoreManeger.combo = 0;//コンボリセット
                 //マイナスの時は0に
@@ -296,15 +309,25 @@ public class Spirit : MonoBehaviour
             }
             if (devil != null)
             {
-                scoreManeger.score += 2000;//スコアを加算
+                scoreManeger.score += scoreUpDevil;//スコアを加算
                 devil.Damege();//落下関数を呼び出し
             }
         }
         //善の魂が悪霊に食われる時
         if (collider.tag == "Devil" && !evile)
         {
+            if (devil == null)
+            {
+                devil = collider.gameObject.GetComponent<Devil>();//悪魔のスクリプト
+            }
+            if (devil != null)
+            {
+                devil.Eaten();
+            }
+
             scoreManeger.miss++;//ダメージを受ける
             scoreManeger.combo=0;//コンボリセット
+          
             Destroy(gameObject);//消滅させる
 
         }
