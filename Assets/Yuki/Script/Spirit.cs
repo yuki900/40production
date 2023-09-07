@@ -241,6 +241,7 @@ public class Spirit : MonoBehaviour
 
                 scoreManeger.score -= 1000;//スコアを減少
                 scoreManeger.miss++;//ダメージを受ける
+                scoreManeger.combo = 0;//コンボリセット
                 //マイナスの時は0に
                 if (scoreManeger.score < 0)
                 {
@@ -258,6 +259,7 @@ public class Spirit : MonoBehaviour
             {
 
                 scoreManeger.score += 100;//スコアを加算
+                scoreManeger.combo++;//コンボ＋
             }
             
             //善人の時
@@ -266,6 +268,7 @@ public class Spirit : MonoBehaviour
 
                 scoreManeger.score -= 1000;//スコアを減少
                 scoreManeger.miss++;//ダメージを受ける
+                scoreManeger.combo = 0;//コンボリセット
                 //マイナスの時は0に
                 if (scoreManeger.score < 0)
                 {
@@ -301,6 +304,7 @@ public class Spirit : MonoBehaviour
         if (collider.tag == "Devil" && !evile)
         {
             scoreManeger.miss++;//ダメージを受ける
+            scoreManeger.combo=0;//コンボリセット
             Destroy(gameObject);//消滅させる
 
         }
