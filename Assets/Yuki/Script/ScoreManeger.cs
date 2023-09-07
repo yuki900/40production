@@ -30,10 +30,23 @@ public class ScoreManeger : MonoBehaviour
     [SerializeField][Tooltip("普通になるコンボ数")] private int comboRegular;
     [SerializeField][Tooltip("最大になるコンボ数")] private int comboLarge;
 
+    [Header("タイマー")]
+    [SerializeField][Tooltip("最大時間(1分2分のような形式で入力)")] private float maxTime;
+    private float time = 60;//実際に表示する用変数
+
+    //表示調性用変数
+    private float minTime;
+    private float secondTime;
+    private double upperDigit;
+
+
+
+
     [Header("表示するテキスト")]
     [SerializeField] private Text scoreText;//UI表示用
     [SerializeField] private Text missText;//UI表示用
     [SerializeField] private Text comboText;//UI表示用
+    [SerializeField] private Text timeText;//UI表示用
 
     [HideInInspector] public int magnification=1;//コンボ時の倍率用変数
 
@@ -46,14 +59,17 @@ public class ScoreManeger : MonoBehaviour
     {
         score = 0;//初期化
         miss = 0;
+
+
+        time = 60 * maxTime;
     }
 
     // Update is called once per frame
     void Update()
     {
         scoreText.text = score.ToString();//スコア表示部分
-        missText.text = miss.ToString();//スコア表示部分
-        comboText.text = combo.ToString();//スコア表示部分
+        missText.text = miss.ToString();//ミス表示部分
+        comboText.text = combo.ToString();//コンボ表示部分
 
        
 
@@ -83,12 +99,43 @@ public class ScoreManeger : MonoBehaviour
         }
 
 
+
+        //タイマー処理
+
+        time-=Time.deltaTime;
+
+        minTime = (int)((time % 3600) / 60);
+        secondTime = (int)(time % 60);
+        // 秒数一桁の時先頭に0追加(前田追加)
+        if (secondTime < 10)
+        {
+            timeText.text = $"{minTime}:0{secondTime}";
+        }
+        else
+        {
+            timeText.text = $"{minTime}:{secondTime}";
+        }
+
+
+
+
+
+
+        Combo();
+      
+
+    }
+
+
+    private void Combo()
+    {
+
         //コンボ数に応じたスコア倍率の変化
         if (combo <= 15)
         {
-            magnification =times[0];
+            magnification = times[0];
         }
-        else if (combo >= 16&&combo<=20)
+        else if (combo >= 16 && combo <= 20)
         {
             magnification = times[1];
         }
@@ -112,7 +159,7 @@ public class ScoreManeger : MonoBehaviour
         {
             magnification = times[6];
         }
-        else if (combo >= 46 && combo <=50)
+        else if (combo >= 46 && combo <= 50)
         {
             magnification = times[7];
         }
@@ -161,5 +208,7 @@ public class ScoreManeger : MonoBehaviour
             magnification = times[18];
         }
 
+
     }
+
 }
