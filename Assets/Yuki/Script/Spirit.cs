@@ -9,7 +9,7 @@ public class Spirit : MonoBehaviour
 
     private bool eriaFlag = false;//吹っ飛ばし範囲に居るかフラグ
     private bool lightFlag = false;//光範囲に居るかフラグ
-
+    private Vector2 goalPosition;//光の座標
 
     //悪魔関係
     private bool eatStart = false;//悪魔に食われる開始
@@ -60,7 +60,7 @@ public class Spirit : MonoBehaviour
 
 
         }
-       
+        goalPosition = new Vector2(gameObject.transform.position.x,8);//魂が向かう位置を設定
     }
 
     // Update is called once per frame
@@ -70,11 +70,17 @@ public class Spirit : MonoBehaviour
         //範囲外に行った場合は落ちる
         if (lightFlag)
         {
-            rigidbody.gravityScale = 0;
-            rigidbody.AddForce(Vector2.up * speed);//常時上に移動
-           // rigidbody.velocity = new Vector2(0, speed);
+            rigidbody.gravityScale = 0;//上るために重さなくす
+
+            Transform objectTransform = gameObject.GetComponent<Transform>(); // ゲームオブジェクトのTransformコンポーネントを取得
+            objectTransform.position = Vector3.Lerp(objectTransform.position, goalPosition, speed  * Time.deltaTime); // 目的の位置に移動
+
+
+            // rigidbody.AddForce(Vector2.up *speed,ForceMode2D.Force);//常時上に移動
+            //  rigidbody.velocity = new Vector2(0, speed);//上に移動(加速度を直接操作)
+            //transform.position += new Vector3(0.0f, speed,0.0f);(トランスフォームの操作)
         }
-        else rigidbody.gravityScale = 1;
+        else rigidbody.gravityScale = 1;//重さを操作して落とす
 
 
         //悪魔に引き寄せられる
@@ -82,18 +88,18 @@ public class Spirit : MonoBehaviour
         {
 
 
-            float speed = 0.5f; // 移動の速度を指定
             Transform objectTransform = gameObject.GetComponent<Transform>(); // ゲームオブジェクトのTransformコンポーネントを取得
-            objectTransform.position = Vector3.Lerp(objectTransform.position, devilPosition, speed * Time.deltaTime); // 目的の位置に移動
+            objectTransform.position = Vector3.Lerp(objectTransform.position, devilPosition, speed*2 * Time.deltaTime); // 目的の位置に移動
         }
 
 
+        //はじく動作系
+        //悪魔のひきよせ中は出来ない
 
-
-        //弱い仮
-        if (Input.GetKeyDown("z") && eriaFlag)
+        //弱い
+        if (Input.GetKeyDown("z") && eriaFlag&&!eatStart)
         {
-
+            //rigidbody.velocity = new Vector2(1f, 1f);
             rigidbody.gravityScale = 0;
 
             if (angel.rightFlag)
@@ -114,14 +120,14 @@ public class Spirit : MonoBehaviour
         }
 
         //強い仮
-        if (Input.GetKeyDown("x") && eriaFlag)
+        if (Input.GetKeyDown("x") && eriaFlag&&!eatStart)
         {
             //rigidbody. = false;
             // blowAwayFlag = true;
             //rigidbody.AddForce(Vector2.down * power, ForceMode2D.Impulse);
             rigidbody.gravityScale = 1;
             speed = 0;
-
+            //rigidbody.velocity = new Vector2(1f, 1f);
             if (angel.rightFlag)
             {
                 rigidbody.AddForce(Vector2.right * power, ForceMode2D.Force);
@@ -148,6 +154,7 @@ public class Spirit : MonoBehaviour
     {
         eriaFlag = false;
         lightFlag = false;
+        //rigidbody.AddForce(Vector2.down * speed, ForceMode2D.Force);//加速抑制
     }
 
 
@@ -231,6 +238,20 @@ public class Spirit : MonoBehaviour
             Destroy(gameObject);//消滅させる
 
         }
+
+
+    
+
+        //プレイヤーの範囲を出たら攻撃可能フラグをオフ
+        if (collider.tag == "Player")
+        {
+            eriaFlag = false;
+        }
+
+
+
+
+
 
     } 
 
