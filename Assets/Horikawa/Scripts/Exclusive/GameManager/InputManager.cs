@@ -128,7 +128,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         InputSystem.ResetHaptics();
     }
 
-    // 軸入力時のコールバック
+    // 方向入力時のコールバック
     private void DirectionInvoke(InputAction.CallbackContext _context)
     {
         Vector2 readVector = _context.ReadValue<Vector2>();
@@ -153,18 +153,16 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         decideEvent.Invoke();
     }
 
-    // 決定入力時のコールバック
+    // 弱攻撃入力時のコールバック
     private void WeakAttackInvoke(InputAction.CallbackContext _context)
     {
-        Debug.Log("Weak");
         // イベント実行
         weakAttackEvent.Invoke();
     }
 
-    // 決定入力時のコールバック
+    // 強攻撃入力時のコールバック
     private void StrongAttackInvoke(InputAction.CallbackContext _context)
     {
-        Debug.Log("Strong");
         // イベント実行
         strongAttackEvent.Invoke();
     }
