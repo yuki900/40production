@@ -11,8 +11,14 @@ public class Spirit : MonoBehaviour
     private bool lightFlag = false;//光範囲に居るかフラグ
     private Vector2 goalPosition;//光の座標
 
+    private bool atack=false;//飛ばされた
+
+    private int yPosition = 16;//移動位置指定用変数
+
+    private bool destroy = false;//削除用フラグ
+
     //悪魔関係
-    private bool eatStart = false;//悪魔に食われる開始
+    private  bool eatStart = false;//悪魔に食われる開始
     private Vector2 devilPosition;//悪魔の座標
 
 
@@ -60,7 +66,7 @@ public class Spirit : MonoBehaviour
 
 
         }
-        goalPosition = new Vector2(gameObject.transform.position.x,8);//魂が向かう位置を設定
+        goalPosition = new Vector2(gameObject.transform.position.x, yPosition);//魂が向かう位置を設定
     }
 
     // Update is called once per frame
@@ -99,21 +105,34 @@ public class Spirit : MonoBehaviour
         //弱い
         if (Input.GetKeyDown("z") && eriaFlag&&!eatStart)
         {
-            //rigidbody.velocity = new Vector2(1f, 1f);
+            destroy=true;//消去用フラグ
             rigidbody.gravityScale = 0;
 
+            //向いてる方向に応じてはじかれる方向を変更
+            //右
             if (angel.rightFlag)
             {
+             
                 rigidbody.AddForce(Vector2.right * miniPower, ForceMode2D.Force);
-
+               
 
             }
 
-
+            //左
             if (angel.leftFlag)
             {
                 rigidbody.AddForce(Vector2.left * miniPower, ForceMode2D.Force);
 
+            }
+            //上
+            if (angel.upFlag)
+            {
+                rigidbody.AddForce(Vector2.up * miniPower, ForceMode2D.Force);
+            }
+            //下
+            if (angel.downFlag)
+            {
+                rigidbody.AddForce(Vector2.down * miniPower, ForceMode2D.Force);
             }
             eriaFlag = false;
 
@@ -122,12 +141,12 @@ public class Spirit : MonoBehaviour
         //強い仮
         if (Input.GetKeyDown("x") && eriaFlag&&!eatStart)
         {
-            //rigidbody. = false;
-            // blowAwayFlag = true;
-            //rigidbody.AddForce(Vector2.down * power, ForceMode2D.Impulse);
-            rigidbody.gravityScale = 1;
+            destroy = true;//消去用フラグ
+            rigidbody.gravityScale = 1;//落下用に重力を操作
             speed = 0;
-            //rigidbody.velocity = new Vector2(1f, 1f);
+
+            //向いてる方向に応じてはじかれる方向を変更
+            //右
             if (angel.rightFlag)
             {
                 rigidbody.AddForce(Vector2.right * power, ForceMode2D.Force);
@@ -135,10 +154,22 @@ public class Spirit : MonoBehaviour
 
             }
 
-
+            //左
             if (angel.leftFlag)
             {
                 rigidbody.AddForce(Vector2.left * power, ForceMode2D.Force);
+
+            }
+            //上
+            if (angel.upFlag)
+            {
+                rigidbody.AddForce(Vector2.up * power, ForceMode2D.Force);
+
+            }
+            //下
+            if (angel.downFlag)
+            {
+                rigidbody.AddForce(Vector2.down * power, ForceMode2D.Force);
 
             }
             eriaFlag = false;
@@ -154,7 +185,6 @@ public class Spirit : MonoBehaviour
     {
         eriaFlag = false;
         lightFlag = false;
-        //rigidbody.AddForce(Vector2.down * speed, ForceMode2D.Force);//加速抑制
     }
 
 
@@ -162,12 +192,19 @@ public class Spirit : MonoBehaviour
     public void DevilEat(Vector2 targetPosition)
     {
 
-        eatStart = true;//食われる動作開始フラグ
+        eatStart = true;//食われる
         devilPosition = targetPosition;
    
 
     }
+    //悪魔が倒された時の関数
+    public void DevilEatReset()
+    {
 
+        eatStart = false;//食われる動作終了
+
+
+    }
 
 
 
@@ -203,12 +240,41 @@ public class Spirit : MonoBehaviour
             {
 
                 scoreManeger.score -= 1000;//スコアを減少
+                scoreManeger.miss++;//ダメージを受ける
+                //マイナスの時は0に
+                if (scoreManeger.score < 0)
+                {
+                    scoreManeger.score = 0;
+                }
             }
             Destroy(gameObject);
 
         }
+        //一度でも飛ばされたフラグがオンの時、スコアを変動させて自身を消去
+        if(collider.tag == "DestroyEria" && destroy)
+        {
+            //悪人の時
+            if (evile)
+            {
 
-       
+                scoreManeger.score += 100;//スコアを加算
+            }
+            
+            //善人の時
+            if (!evile)
+            {
+
+                scoreManeger.score -= 1000;//スコアを減少
+                scoreManeger.miss++;//ダメージを受ける
+                //マイナスの時は0に
+                if (scoreManeger.score < 0)
+                {
+                    scoreManeger.score = 0;
+                }
+            }
+            Destroy(gameObject);
+        }
+
     }
 
 
@@ -219,7 +285,7 @@ public class Spirit : MonoBehaviour
     {
         
         //悪霊が悪魔にぶつかった時
-        if (collider.tag == "Devil" && evile)
+        if (collider.tag == "Devil" && evile&&destroy)
         {
             if (devil == null)
             {
@@ -234,7 +300,7 @@ public class Spirit : MonoBehaviour
         //善の魂が悪霊に食われる時
         if (collider.tag == "Devil" && !evile)
         {
-            scoreManeger.life--;//ダメージを受ける
+            scoreManeger.miss++;//ダメージを受ける
             Destroy(gameObject);//消滅させる
 
         }
@@ -242,10 +308,10 @@ public class Spirit : MonoBehaviour
 
     
 
-        //プレイヤーの範囲を出たら攻撃可能フラグをオフ
-        if (collider.tag == "Player")
+        //ぶつかった側も消去フラグをオン
+        if (collider.tag == "Spirit"|| collider.tag == "EvilSpirit")
         {
-            eriaFlag = false;
+            destroy = true;
         }
 
 

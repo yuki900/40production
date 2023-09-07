@@ -9,6 +9,8 @@ TagManager:
   - ScoreManeger
   - Spirit
   - Devil
+  - DestroyEria
+  - EvilSpirit
   layers:
   - Default
   - TransparentFX

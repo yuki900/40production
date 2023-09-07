@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3595263896254151131}
   m_Layer: 0
   m_Name: EvilSpirit
-  m_TagString: Untagged
+  m_TagString: EvilSpirit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,6 +125,7 @@ MonoBehaviour:
   power: 600
   miniPower: 30
   evile: 1
+  devil: {fileID: 0}
 --- !u!58 &5015690314899132184
 CircleCollider2D:
   m_ObjectHideFlags: 0

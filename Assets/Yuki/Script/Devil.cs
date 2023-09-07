@@ -55,7 +55,7 @@ public class Devil : MonoBehaviour
         {
             rigidbody.gravityScale = 1;//d—Í‚ğƒIƒ“‚É‚µ‚Ä—‰º‚³‚¹‚é
             transform.localScale = new Vector3(1f, -1f, 1f);//‰¼—‰º‰‰o
-
+            spirite.DevilEatReset();
         }
 
 
