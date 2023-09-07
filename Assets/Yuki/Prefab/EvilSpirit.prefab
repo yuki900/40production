@@ -124,8 +124,8 @@ MonoBehaviour:
   miniPower: 30
   power: 400
   evile: 1
-  minSpede: 0.1
-  maxSpede: 0.3
+  minSpede: 0.05
+  maxSpede: 0.15
 --- !u!58 &5015690314899132184
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -318,19 +318,21 @@ public class Spirit : MonoBehaviour
         //善の魂が悪霊に食われる時
         if (collider.tag == "Devil" && !evile)
         {
-            if (devil == null)
-            {
+            
                 devil = collider.gameObject.GetComponent<Devil>();//悪魔のスクリプト
-            }
-            if (devil != null)
-            {
-                devil.Eaten();
-            }
+            
+           
+              
 
-            scoreManeger.miss++;//ダメージを受ける
-            scoreManeger.combo=0;//コンボリセット
-          
-            Destroy(gameObject);//消滅させる
+                    devil.Eaten();
+
+                    scoreManeger.miss++;//ダメージを受ける
+                    scoreManeger.combo = 0;//コンボリセット
+
+                    Destroy(gameObject);//消滅させる
+                
+            
+            
 
         }
 

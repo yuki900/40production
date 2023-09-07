@@ -22,6 +22,10 @@ public class ScoreManeger : MonoBehaviour
     [SerializeField][Tooltip("普通")] private GameObject light_regular;
     [SerializeField][Tooltip("大きい")] private GameObject light_large;
 
+    [Header("悪魔が出るコンボ数")]
+    [SerializeField] public int devilGenerate;
+
+
     [Header("コンボに応じた光の切り替え")]
     [SerializeField][Tooltip("普通になるコンボ数")] private int comboRegular;
     [SerializeField][Tooltip("最大になるコンボ数")] private int comboLarge;

@@ -7,7 +7,7 @@ public class SpiritGenerater : MonoBehaviour
     private float timeCount=0;//生成用カウント
 
 
-    //インスペクタに表示するもの
+    //インスペクタに表示
     [Header("生成する魂")]
     [SerializeField][Tooltip("善の魂のプレハブを入れる")] GameObject Sprit;//善魂
     [SerializeField][Tooltip("悪の魂のプレハブを入れる")] GameObject EvileSprit;//悪魂
