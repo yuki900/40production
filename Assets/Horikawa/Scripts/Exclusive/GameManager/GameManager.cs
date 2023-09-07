@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     // スコア記録
-    public int score;
+    public int score = 74;
 
     private void Start()
     {
