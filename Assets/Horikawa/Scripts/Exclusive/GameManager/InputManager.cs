@@ -26,17 +26,37 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     [HideInInspector]
     public UnityEvent decideEvent;
 
+    // 弱攻撃入力アクション
+    [SerializeField]
+    private InputAction weakAttackInputAction;
+    // 弱攻撃入力時のイベント
+    [HideInInspector]
+    public UnityEvent weakAttackEvent;
+
+
+    // 強攻撃入力アクション
+    [SerializeField]
+    private InputAction strongAttackInputAction;
+    // 強攻撃入力時のイベント
+    [HideInInspector]
+    public UnityEvent strongAttackEvent;
+
     private void OnEnable()
     {
         // 入力アクションを有効化
         directionInputAction.Enable();
         pauseInputAction.Enable();
         decideInputAction.Enable();
+        weakAttackInputAction.Enable();
+        strongAttackInputAction.Enable();
 
         // コールバックを追加
-        directionInputAction.performed  += DirectionInvoke;
-        pauseInputAction.performed      += PauseInvoke;
-        decideInputAction.performed     += DecideInvoke;
+        directionInputAction.performed      += DirectionInvoke;
+        pauseInputAction.performed          += PauseInvoke;
+        decideInputAction.performed         += DecideInvoke;
+        weakAttackInputAction.performed     += WeakAttackInvoke;
+        strongAttackInputAction.performed   += StrongAttackInvoke;
+
     }
 
     private void OnDisable()
@@ -45,11 +65,15 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         directionInputAction.Disable();
         pauseInputAction.Disable();
         decideInputAction.Disable();
+        weakAttackInputAction.Disable();
+        strongAttackInputAction.Disable();
 
         // コールバックを削除
-        directionInputAction.performed  -= DirectionInvoke;
-        pauseInputAction.performed      -= PauseInvoke;
-        decideInputAction.performed     -= DecideInvoke;
+        directionInputAction.performed      -= DirectionInvoke;
+        pauseInputAction.performed          -= PauseInvoke;
+        decideInputAction.performed         -= DecideInvoke;
+        weakAttackInputAction.performed     -= WeakAttackInvoke;
+        strongAttackInputAction.performed   -= StrongAttackInvoke;
     }
 
     /// <summary>
@@ -104,6 +128,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         InputSystem.ResetHaptics();
     }
 
+    // 軸入力時のコールバック
     private void DirectionInvoke(InputAction.CallbackContext _context)
     {
         Vector2 readVector = _context.ReadValue<Vector2>();
@@ -126,5 +151,21 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     {
         // イベント実行
         decideEvent.Invoke();
+    }
+
+    // 決定入力時のコールバック
+    private void WeakAttackInvoke(InputAction.CallbackContext _context)
+    {
+        Debug.Log("Weak");
+        // イベント実行
+        weakAttackEvent.Invoke();
+    }
+
+    // 決定入力時のコールバック
+    private void StrongAttackInvoke(InputAction.CallbackContext _context)
+    {
+        Debug.Log("Strong");
+        // イベント実行
+        strongAttackEvent.Invoke();
     }
 }

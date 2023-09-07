@@ -14,8 +14,18 @@ public abstract class CommandBase : MonoBehaviour
 
         // イベントに関数を追加
         command.onDecide.AddListener(OnDecide);
+        InputManager.Instance.decideEvent.AddListener(DecideInput);
     }
 
     // 決定時に呼び出される関数
     protected abstract void OnDecide();
+
+    // 決定入力時に呼び出される関数
+    private void DecideInput()
+    {
+        if (command.isSelected)
+        {
+            command.onDecide.Invoke();
+        }
+    }
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4096919371179120829}
   - component: {fileID: 3295254596070272339}
   - component: {fileID: 4096919371179120828}
-  - component: {fileID: 1138489758091002859}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -247,16 +246,59 @@ MonoBehaviour:
   decideEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1138489758091002859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4096919371179120826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2be8c90424227d4c8127e3323f87cc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: be64bca8512636842a00f5b676bc01b0, type: 2}
+  weakAttackInputAction:
+    m_Name: Weak Attack Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fdd0a73c-d080-463a-85a3-607cb207686c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: fe01b906-0cbb-4c89-980e-07ed20f06ce3
+      m_Path: <Keyboard>/z
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Weak Attack Input
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 10c3486e-50c9-4513-b854-25a4432a695b
+      m_Path: <Gamepad>/buttonSouth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Weak Attack Input
+      m_Flags: 0
+    m_Flags: 0
+  weakAttackEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  strongAttackInputAction:
+    m_Name: Strong Attack Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: aad1c51a-a6aa-45ca-8348-8ddd818e1bb9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 7692d708-49b9-4b94-a1cd-db01bdbee1d8
+      m_Path: <Keyboard>/x
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Strong Attack Input
+      m_Flags: 0
+    - m_Name: 
+      m_Id: c8b27499-b0cf-478c-a059-73cf84531d40
+      m_Path: <Gamepad>/buttonEast
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Strong Attack Input
+      m_Flags: 0
+    m_Flags: 0
+  strongAttackEvent:
+    m_PersistentCalls:
+      m_Calls: []
