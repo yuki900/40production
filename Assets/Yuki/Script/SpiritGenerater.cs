@@ -8,14 +8,17 @@ public class SpiritGenerater : MonoBehaviour
 
 
     //インスペクタに表示するもの
+    [Header("生成する魂")]
     [SerializeField][Tooltip("善の魂のプレハブを入れる")] GameObject Sprit;//善魂
     [SerializeField][Tooltip("悪の魂のプレハブを入れる")] GameObject EvileSprit;//悪魂
 
+    [Header("時間")]
     [SerializeField][Tooltip("魂を生成する時間間隔")] float generateTime;
 
+    [Header("確率")]
     [SerializeField][Range(1, 100)][Tooltip("善の魂を生成する確率")] private int ratio;//善の生成率を決定
 
-
+    [Header("座標関係")]
     [SerializeField][Tooltip("生成する範囲")] float interval;//ジェネレータを中心とした左右の生成範囲
     [SerializeField][Tooltip("生成するy座標")] float y;//生成する高さ
 

@@ -26,10 +26,10 @@ public class Angel : MonoBehaviour
     private float speedy;//プレイヤーy移動速度
 
     //魂に渡す方向用フラグ
-    public bool rightFlag = false;//右方向吹っ飛ばしフラグ
-    public bool leftFlag = false;//左方向吹っ飛ばしフラグ
-    public bool upFlag = false;//上方向吹っ飛ばしフラグ
-    public bool downFlag = false;//下方向吹っ飛ばしフラグ
+    [HideInInspector] public bool rightFlag = false;//右方向吹っ飛ばしフラグ
+    [HideInInspector] public bool leftFlag = false;//左方向吹っ飛ばしフラグ
+    [HideInInspector] public bool upFlag = false;//上方向吹っ飛ばしフラグ
+    [HideInInspector] public bool downFlag = false;//下方向吹っ飛ばしフラグ
 
     private bool atackFlag=false;//攻撃フラグ
     private bool keyBlock=false;//連打防止用

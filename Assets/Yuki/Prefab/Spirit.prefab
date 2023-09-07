@@ -124,9 +124,8 @@ MonoBehaviour:
   miniPower: 30
   power: 400
   evile: 0
-  minSpede: 0.2
-  maxSpede: 0.5
-  devil: {fileID: 0}
+  minSpede: 0.1
+  maxSpede: 0.3
 --- !u!58 &5639599126186452964
 CircleCollider2D:
   m_ObjectHideFlags: 0

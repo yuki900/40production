@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6116698274169432853}
   - component: {fileID: 6116698274169432854}
   m_Layer: 0
-  m_Name: In_light
+  m_Name: light
   m_TagString: GodLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

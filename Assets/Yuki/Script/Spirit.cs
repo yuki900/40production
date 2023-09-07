@@ -26,16 +26,18 @@ public class Spirit : MonoBehaviour
     private int scoreUpDevil;
 
     //インスペクタ表示変数
+    [Header("吹っ飛ばす力関係の設定項目")]
     [SerializeField][Tooltip("吹っ飛ばす力(弱)")] private float miniPower;//吹っ飛ばす力(弱)
     [SerializeField][Tooltip("吹っ飛ばす力(弱)")] private float power;//吹っ飛ばす力(強)
     [SerializeField][Tooltip("オンにすると悪霊")] private bool evile = false;//悪人か善人か
 
+    [Header("速度")]
     [SerializeField][Tooltip("最小速度")] private float minSpede;
     [SerializeField][Tooltip("最大速度")] private float maxSpede;
 
 
     private Angel angel;
-    public Devil devil;
+    private Devil devil;
 
     private ScoreManeger scoreManeger;
 
