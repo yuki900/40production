@@ -55,7 +55,7 @@ public class ScoreManeger : MonoBehaviour
     [HideInInspector] public int magnification = 1;//コンボ時の倍率用変数
 
 
-
+    [HideInInspector] public bool endStopFlag = false;//終了時オブジェクト停止用フラグ
 
     [Header("倍率")]
     [SerializeField] int[] times = new int[20];//具体的な倍率
@@ -117,7 +117,7 @@ public class ScoreManeger : MonoBehaviour
 
 
         //タイマー処理
-        if (time > 0)
+        if (time > 0&&!endStopFlag)
         {
 
 
@@ -244,15 +244,15 @@ public class ScoreManeger : MonoBehaviour
 
     void End()
     {
-
+        endStopFlag = true; 
         //終了画像を表示
         endUI.SetActive(true);
 
         gameManager.score = score;//ゲームマネージャーにスコアを渡す
                                   //数秒後に遷移
-        Invoke("ChangeScene", 0.0f);
+        Invoke("ChangeScene", 2.0f);
 
-        // Time.timeScale=0;//画面を停止
+        
 
     }
 
