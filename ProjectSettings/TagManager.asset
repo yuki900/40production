@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - GodLight
+  - ScoreEria
+  - ScoreManeger
+  - Spirit
+  - Devil
+  - DestroyEria
+  - EvilSpirit
   layers:
   - Default
   - TransparentFX
