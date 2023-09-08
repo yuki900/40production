@@ -88,7 +88,7 @@ public class DevilGenerater : MonoBehaviour
                 if (rlRand == 1)
                 {
 
-                    posi = new Vector3(8, 0, 0.0f);//生成位置を決定
+                    posi = new Vector3(8, 0, 0);//生成位置を決定
 
                 }
 
@@ -96,7 +96,7 @@ public class DevilGenerater : MonoBehaviour
                 else if (rlRand != 1)
                 {
 
-                    posi = new Vector3(-8, 0, 0.0f);//生成位置を決定
+                    posi = new Vector3(-8, 0, 0);//生成位置を決定
 
                 }
                 //生成

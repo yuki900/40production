@@ -39,6 +39,7 @@ public class Spirit : MonoBehaviour
     [SerializeField][Tooltip("Å‘å‘¬“x")] private float maxSpeed;
 
 
+
     private Angel angel;
     private Devil devil;
 
