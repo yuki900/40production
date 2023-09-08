@@ -45,18 +45,20 @@ public class Spirit : MonoBehaviour
     private Devil devil;
 
     private ScoreManeger scoreManeger;
-
-
-
     new Rigidbody2D rigidbody;
 
+    AudioSource audioSource;
+    [Header("音源")]
 
+    [SerializeField] AudioClip Se_heaven;//召される
+    [SerializeField] AudioClip Se_soul;//食われる
+    
     // Start is called before the first frame update
     void Start()
     {
 
         rigidbody = GetComponent<Rigidbody2D>();
-
+        audioSource = GetComponent<AudioSource>();
 
         if (angel == null)
         {
@@ -146,7 +148,7 @@ public class Spirit : MonoBehaviour
         //弱い
         if (eriaFlag && !eatStart&&!notAttack)
         {
-            destroy = true;//消去用フラグ
+            
             rigidbody.gravityScale = 0;
 
             //向いてる方向に応じてはじかれる方向を変更
@@ -185,7 +187,6 @@ public class Spirit : MonoBehaviour
     //強攻撃処理
      private void StrongAttackEvent()
     {
-
         //強い仮
         if (eriaFlag && !eatStart&&!notAttack)
         {
@@ -282,8 +283,8 @@ public class Spirit : MonoBehaviour
         //スコア範囲に入ったらスコアを加算し、自身を削除
         if (collider.tag == "ScoreEria")
         {
-
-            notAttack=true;//フラグをオンにして飛ばす動作を出来なく
+            audioSource.PlayOneShot(Se_heaven);//SE
+            notAttack =true;//フラグをオンにして飛ばす動作を出来なく
               //サイズの変更
               scale += 0.005f;
             transform.localScale = new Vector3(scale, scale, scale);
@@ -369,9 +370,9 @@ public class Spirit : MonoBehaviour
                     scoreManeger.combo = 0;//コンボリセット
 
                     Destroy(gameObject);//消滅させる
-                
-            
-            
+
+
+            audioSource.PlayOneShot(Se_soul);//SE
 
         }
 

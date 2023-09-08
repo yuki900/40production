@@ -1393,8 +1393,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Devil: {fileID: 1258756778052177539, guid: a81f7f59180b6294f8a31c72f6c90f3b, type: 3}
   generateProbability: 20
-  time: 4
-  generateMax: 3
+  time: 5
+  generateMax: 9
   scoreManeger: {fileID: 49655529}
   existenceFlag: 0
 --- !u!4 &983345350
