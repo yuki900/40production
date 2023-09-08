@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using K_Librarys;
 
+[RequireComponent(typeof(AudioSource))]
 public class AudioManager : SingletonMonoBehaviour<AudioManager>
 {
     public enum AudioVolumeParam
@@ -13,18 +14,33 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
         SE,
     }
 
+    public enum SE
+    {
+        CommandDecide,
+    }
+
     // セーブキーの共通文字列
     private const string VOLUME_VALUE_SAVE_KEY_BASE = "VolumeValueSave";
+
+    // コンポーネント
+    private AudioSource audioSource;
 
     // オーディオミキサー
     [SerializeField]
     private AudioMixer audioMixer;
 
+    // SEの配列
+    [SerializeField]
+    private AudioClip[] audioClips;
+
     private void Start()
     {
-        audioMixer.SetFloat(AudioVolumeParam.Master.ToString() + "Volume", ValueToDB(GetVolumeValue(AudioVolumeParam.Master)));
-        audioMixer.SetFloat(AudioVolumeParam.BGM.ToString() + "Volume", ValueToDB(GetVolumeValue(AudioVolumeParam.BGM)));
-        audioMixer.SetFloat(AudioVolumeParam.SE.ToString() + "Volume", ValueToDB(GetVolumeValue(AudioVolumeParam.SE)));
+        // コンポーネント取得
+        audioSource = GetComponent<AudioSource>();
+
+        //audioMixer.SetFloat(AudioVolumeParam.Master.ToString() + "Volume", ValueToDB(GetVolumeValue(AudioVolumeParam.Master)));
+        //audioMixer.SetFloat(AudioVolumeParam.BGM.ToString() + "Volume", ValueToDB(GetVolumeValue(AudioVolumeParam.BGM)));
+        //audioMixer.SetFloat(AudioVolumeParam.SE.ToString() + "Volume", ValueToDB(GetVolumeValue(AudioVolumeParam.SE)));
     }
 
     /// <summary>
@@ -59,5 +75,10 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
     private static float ValueToDB(float _value)
     {
         return Mathf.Clamp(Mathf.Log10(_value) * 20f, -80f, 0f);
+    }
+
+    public void PlayOneShot(SE _se)
+    {
+        audioSource.PlayOneShot(audioClips[(int)_se]);
     }
 }

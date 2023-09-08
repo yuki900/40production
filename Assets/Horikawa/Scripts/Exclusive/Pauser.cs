@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class Pauser : MonoBehaviour
 {
+    // コンポーネント
+    private AudioSource audioSource;
+
     // ポーズ中か
     public static bool IsPausing { get; private set; } = false;
 
@@ -12,12 +15,19 @@ public class Pauser : MonoBehaviour
     [SerializeField]
     private GameObject pausePanel;
 
+    // ポーズSE
+    [SerializeField]
+    private AudioClip pauseSE;
+
     // ポーズ解除コマンド
     [SerializeField]
     private Command unpauseCommand;
 
     private void Start()
     {
+        // コンポーネント取得
+        audioSource = GetComponent<AudioSource>();
+
         // イベントに関数を追加
         InputManager.Instance.pauseEvent.AddListener(Pause);
         unpauseCommand.onDecide.AddListener(Unpause);
@@ -32,6 +42,9 @@ public class Pauser : MonoBehaviour
 
         Time.timeScale = 0f;
         pausePanel.SetActive(true);
+
+        // SE再生
+        audioSource.PlayOneShot(pauseSE);
     }
 
     /// <summary>
