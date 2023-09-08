@@ -28,8 +28,10 @@ public class DevilGenerater : MonoBehaviour
     private int generateCount = 0;//生成カウント
     private float timeCount = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    private int rlRand;
+
+   // Start is called before the first frame update
+   void Start()
     {
         generateCount = 0;
     }
@@ -77,7 +79,10 @@ public class DevilGenerater : MonoBehaviour
             if (rnd <= generateProbability)
             {
 
-                float rlRand = Random.Range(1, 2);//左右をランダムに決定
+                rlRand = Random.Range(0,2);//左右をランダムに決定
+               
+
+                //生成する位置
                 Vector3 posi = new Vector3(0, 0, 0);
                 //1なら右に生成
                 if (rlRand == 1)
@@ -87,7 +92,7 @@ public class DevilGenerater : MonoBehaviour
 
                 }
 
-                //2なら右に生成
+                //0なら右に生成
                 else if (rlRand != 1)
                 {
 

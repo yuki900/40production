@@ -87,6 +87,7 @@ public class Devil : MonoBehaviour
             //¶¬ˆÊ’u‚ª¶‚Ì‚Í¶‚ÌˆÊ’u‚ÉˆÚ“®
             if (gameObject.transform.position.x < 0)
             {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
                 goalPosition = new Vector2(-4, 0);//°‚ªŒü‚©‚¤ˆÊ’u‚ğİ’è
 
             }

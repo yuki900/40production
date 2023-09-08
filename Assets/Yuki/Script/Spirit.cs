@@ -289,27 +289,30 @@ public class Spirit : MonoBehaviour
 
         }
         //一度でも飛ばされたフラグがオンの時、スコアを変動させて自身を消去
-        if(collider.tag == "DestroyEria" && destroy)
+        if(collider.tag == "DestroyEria" )
         {
-            //悪人の時
-            if (evil)
+            if (destroy)
             {
-
-                scoreManeger.score += scoreUp;//スコアを加算
-                scoreManeger.combo++;//コンボ＋
-            }
-            
-            //善人の時
-            if (!evil)
-            {
-
-                scoreManeger.score -= scoreDown;//スコアを減少
-                scoreManeger.miss++;//ダメージを受ける
-                scoreManeger.combo = 0;//コンボリセット
-                //マイナスの時は0に
-                if (scoreManeger.score < 0)
+                //悪人の時
+                if (evil)
                 {
-                    scoreManeger.score = 0;
+
+                    scoreManeger.score += scoreUp;//スコアを加算
+                    scoreManeger.combo++;//コンボ＋
+                }
+
+                //善人の時
+                if (!evil)
+                {
+
+                    scoreManeger.score -= scoreDown;//スコアを減少
+                    scoreManeger.miss++;//ダメージを受ける
+                    scoreManeger.combo = 0;//コンボリセット
+                                           //マイナスの時は0に
+                    if (scoreManeger.score < 0)
+                    {
+                        scoreManeger.score = 0;
+                    }
                 }
             }
             Destroy (gameObject);
