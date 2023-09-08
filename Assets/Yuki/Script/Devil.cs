@@ -30,15 +30,14 @@ public class Devil : MonoBehaviour
 
     Animator animator;
 
-   
-
+  
     void Start()
     {
 
 
         rigidbody = GetComponent<Rigidbody2D>();
-    
-
+        animator = GetComponent<Animator>();
+     
         //ジェネレータを取得
         if (devilGenerater == null)
         {
@@ -116,15 +115,14 @@ public class Devil : MonoBehaviour
                 //関数を呼ぶ為にスクリプトも取得
                 spirite = nearObj.GetComponent<Spirit>();
 
-                if (!spirite.notAttack)
-                {
-                    // 目的の位置の座標を指定
-                    Vector2 targetPosition = new Vector2(gameObject.transform.position.x,
-                                                         gameObject.transform.position.y);
+               // if (!spirite.notAttack) { 
+                // 目的の位置の座標を指定
+                Vector2 targetPosition = new Vector2(gameObject.transform.position.x,
+                                                     gameObject.transform.position.y);
 
-                    //魂側のスクリプトから移動させる
-                    spirite.DevilEat(targetPosition);
-                }
+                //魂側のスクリプトから移動させる
+                spirite.DevilEat(targetPosition);
+               // }
                 //経過時間を初期化
                 timeCount = 0;
             }
@@ -132,7 +130,7 @@ public class Devil : MonoBehaviour
 
         if (follFlag)
         {
-          
+      
             rigidbody.gravityScale = 1;//重力をオンにして落下させる
             animator.SetBool("Ded", true);//落下演出
             spirite.DevilEatReset();
