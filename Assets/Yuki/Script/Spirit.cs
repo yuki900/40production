@@ -277,6 +277,8 @@ public class Spirit : MonoBehaviour
         //スコア範囲に入ったらスコアを加算し、自身を削除
         if (collider.tag == "ScoreEria")
         {
+
+            eatStart = true;//攻撃出来ないようにする
             //サイズの変更
              scale += 0.005f;
             transform.localScale = new Vector3(scale, scale, scale);
@@ -285,7 +287,13 @@ public class Spirit : MonoBehaviour
             
             GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.01f);
 
-            Invoke("Buddhahood", 1.0f);//時間差で削除
+            if (GetComponent<SpriteRenderer>().color.a <= 0)
+            {
+                Buddhahood();
+
+            }
+
+           
 
         }
         //一度でも飛ばされたフラグがオンの時、スコアを変動させて自身を消去
@@ -306,7 +314,7 @@ public class Spirit : MonoBehaviour
                 {
 
                     scoreManeger.score -= scoreDown;//スコアを減少
-                    scoreManeger.miss++;//ダメージを受ける
+                    scoreManeger.life--;//ダメージを受ける
                     scoreManeger.combo = 0;//コンボリセット
                                            //マイナスの時は0に
                     if (scoreManeger.score < 0)
@@ -352,7 +360,7 @@ public class Spirit : MonoBehaviour
 
                     devil.Eaten();
 
-                    scoreManeger.miss++;//ダメージを受ける
+                    scoreManeger.life--;//ダメージを受ける
                     scoreManeger.combo = 0;//コンボリセット
 
                     Destroy(gameObject);//消滅させる
@@ -393,7 +401,7 @@ public class Spirit : MonoBehaviour
         {
 
             scoreManeger.score -= scoreDown;//スコアを減少
-            scoreManeger.miss++;//ダメージを受ける
+            scoreManeger.life--;//ダメージを受ける
             scoreManeger.combo = 0;//コンボリセット
                                    //マイナスの時は0に
             if (scoreManeger.score < 0)

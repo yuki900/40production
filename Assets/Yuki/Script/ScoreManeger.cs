@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class ScoreManeger : MonoBehaviour
 {
-    [HideInInspector] public float score = 0;//スコア
-    [HideInInspector] public float miss = 0;//ミス回数
-    [HideInInspector] public float combo = 0;//コンボ回数
+    [HideInInspector] public int score = 0;//スコア
+    [HideInInspector] public int life = 3;//ライフ
+    [HideInInspector] public int combo = 0;//コンボ回数
 
 
     //スコア上昇量
@@ -34,21 +34,23 @@ public class ScoreManeger : MonoBehaviour
     [SerializeField][Tooltip("最大時間(1分2分のような形式で入力)")] private float maxTime;
     private float time = 60;//実際に表示する用変数
 
-    //表示調性用変数
+    //表示調整用変数
     private float minTime;
     private float secondTime;
-    private double upperDigit;
 
 
 
 
     [Header("表示するテキスト")]
     [SerializeField] private Text scoreText;//UI表示用
-    [SerializeField] private Text missText;//UI表示用
+   // [SerializeField] private Text lifeText;//UI表示用
     [SerializeField] private Text comboText;//UI表示用
     [SerializeField] private Text timeText;//UI表示用
 
     [HideInInspector] public int magnification=1;//コンボ時の倍率用変数
+
+
+
 
     [Header("倍率")]
     [SerializeField] int[] times = new int[20];//具体的な倍率
@@ -58,7 +60,7 @@ public class ScoreManeger : MonoBehaviour
     void Start()
     {
         score = 0;//初期化
-        miss = 0;
+        life = 3;
 
 
         time = 60 * maxTime;
@@ -68,7 +70,7 @@ public class ScoreManeger : MonoBehaviour
     void Update()
     {
         scoreText.text = score.ToString();//スコア表示部分
-        missText.text = miss.ToString();//ミス表示部分
+       // lifeText.text = life.ToString();//ミス表示部分
         comboText.text = combo.ToString();//コンボ表示部分
 
        

@@ -19,7 +19,7 @@ public class DevilGenerater : MonoBehaviour
     [SerializeField] private int generateMax;//生成最大数
 
     [Header("スコアマネージャー")]
-    [SerializeField][Tooltip("スコアマネージャー")] ScoreManeger scoreManeger;//悪魂
+    [SerializeField][Tooltip("スコアマネージャー")] ScoreManeger scoreManeger;//
 
 
     [HideInInspector] public bool existenceFlag=false;//すでに悪魔が居るかのフラグ

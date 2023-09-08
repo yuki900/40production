@@ -57,7 +57,7 @@ public class SpiritGenerater : MonoBehaviour
         Vector3 posi = new Vector3(rnd,y, 0.0f);//生成位置を決定
 
         //魂の生成
-        int typeRnd = Random.Range(1, 100);//善悪どちらを生成するか決定
+        int typeRnd = Random.Range(0, 100);//善悪どちらを生成するか決定
 
         //乱数が善の魂生成数値以下なら、善の魂を生成
         //数値を超えている場合は悪の魂を生成
