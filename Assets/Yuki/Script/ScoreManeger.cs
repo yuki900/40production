@@ -141,7 +141,7 @@ public class ScoreManeger : MonoBehaviour
 
 
         //I—¹ˆ—
-        if (time <= 0)
+        if (time <= 0||life<=0)
         {
             End();
 
