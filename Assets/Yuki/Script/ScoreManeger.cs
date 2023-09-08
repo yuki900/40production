@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreManeger : MonoBehaviour
 {
@@ -43,11 +44,15 @@ public class ScoreManeger : MonoBehaviour
 
     [Header("表示するテキスト")]
     [SerializeField] private Text scoreText;//UI表示用
-   // [SerializeField] private Text lifeText;//UI表示用
+                                            // [SerializeField] private Text lifeText;//UI表示用
     [SerializeField] private Text comboText;//UI表示用
     [SerializeField] private Text timeText;//UI表示用
+    [SerializeField] private GameObject endUI;//UI表示用
 
-    [HideInInspector] public int magnification=1;//コンボ時の倍率用変数
+
+
+
+    [HideInInspector] public int magnification = 1;//コンボ時の倍率用変数
 
 
 
@@ -55,6 +60,8 @@ public class ScoreManeger : MonoBehaviour
     [Header("倍率")]
     [SerializeField] int[] times = new int[20];//具体的な倍率
 
+
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -64,20 +71,27 @@ public class ScoreManeger : MonoBehaviour
 
 
         time = 60 * maxTime;
+
+
+        gameManager=GameManager.Instance;
+
+     
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
         scoreText.text = score.ToString();//スコア表示部分
-       // lifeText.text = life.ToString();//ミス表示部分
+                                          // lifeText.text = life.ToString();//ミス表示部分
         comboText.text = combo.ToString();//コンボ表示部分
 
-       
+
 
 
         //最小サイズの表示
-        if(combo< comboRegular)
+        if (combo < comboRegular)
         {
             light_small.SetActive(true);//小
             light_regular.SetActive(false);//普
@@ -86,7 +100,7 @@ public class ScoreManeger : MonoBehaviour
 
         }
         //普通サイズの表示
-        else if(combo >= comboRegular&& combo< comboLarge)
+        else if (combo >= comboRegular && combo < comboLarge)
         {
             light_small.SetActive(false);//小
             light_regular.SetActive(true);//普
@@ -103,8 +117,15 @@ public class ScoreManeger : MonoBehaviour
 
 
         //タイマー処理
+        if (time > 0)
+        {
 
-        time-=Time.deltaTime;
+
+            time -= Time.deltaTime;
+
+
+        }
+
 
         minTime = (int)((time % 3600) / 60);
         secondTime = (int)(time % 60);
@@ -119,12 +140,18 @@ public class ScoreManeger : MonoBehaviour
         }
 
 
+        //終了処理
+        if (time <= 0)
+        {
+            End();
 
+
+        }
 
 
 
         Combo();
-      
+
 
     }
 
@@ -212,5 +239,34 @@ public class ScoreManeger : MonoBehaviour
 
 
     }
+
+
+
+    void End()
+    {
+
+        //終了画像を表示
+        endUI.SetActive(true);
+
+        gameManager.score = score;//ゲームマネージャーにスコアを渡す
+                                  //数秒後に遷移
+        Invoke("ChangeScene", 0.0f);
+
+        // Time.timeScale=0;//画面を停止
+
+    }
+
+
+    void ChangeScene()
+    {
+
+        SceneManager.LoadScene("Result");
+    }
+
+
+
+
+
+
 
 }

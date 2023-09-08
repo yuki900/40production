@@ -25,6 +25,7 @@ public class Spirit : MonoBehaviour
     private int scoreDown;
     private int scoreUpDevil;
 
+    private bool notAttack=false;//消滅時攻撃不可
 
     float scale = 1;//消滅時のスケール
 
@@ -94,6 +95,9 @@ public class Spirit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        goalPosition = new Vector2(gameObject.transform.position.x, yPosition);//魂が向かう位置を設定
+
+
         //光の範囲に居る時のみ上に上る
         //範囲外に行った場合は落ちる
         if (lightFlag && !eatStart)
@@ -140,7 +144,7 @@ public class Spirit : MonoBehaviour
         //悪魔のひきよせ中は出来ない
 
         //弱い
-        if (eriaFlag && !eatStart)
+        if (eriaFlag && !eatStart&&!notAttack)
         {
             destroy = true;//消去用フラグ
             rigidbody.gravityScale = 0;
@@ -183,7 +187,7 @@ public class Spirit : MonoBehaviour
     {
 
         //強い仮
-        if (eriaFlag && !eatStart)
+        if (eriaFlag && !eatStart&&!notAttack)
         {
             destroy = true;//消去用フラグ
             rigidbody.gravityScale = 1;//落下用に重力を操作
@@ -279,9 +283,9 @@ public class Spirit : MonoBehaviour
         if (collider.tag == "ScoreEria")
         {
 
-            eatStart = true;//攻撃出来ないようにする
-            //サイズの変更
-             scale += 0.005f;
+            notAttack=true;//フラグをオンにして飛ばす動作を出来なく
+              //サイズの変更
+              scale += 0.005f;
             transform.localScale = new Vector3(scale, scale, scale);
 
             //透明度を減少させていく
