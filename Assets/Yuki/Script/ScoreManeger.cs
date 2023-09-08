@@ -62,7 +62,8 @@ public class ScoreManeger : MonoBehaviour
 
 
     GameManager gameManager;
-
+    AudioSource audioSource;
+    [SerializeField] AudioClip Se_gameend;//終了SE
     // Start is called before the first frame update
     void Start()
     {
@@ -75,7 +76,7 @@ public class ScoreManeger : MonoBehaviour
 
         gameManager=GameManager.Instance;
 
-     
+        audioSource = GetComponent<AudioSource>();
 
 
     }
@@ -244,6 +245,10 @@ public class ScoreManeger : MonoBehaviour
 
     void End()
     {
+
+        score += combo * 500;//コンボ分スコアに加算
+
+        audioSource.PlayOneShot(Se_gameend);//SE
         endStopFlag = true; 
         //終了画像を表示
         endUI.SetActive(true);

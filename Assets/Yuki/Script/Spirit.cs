@@ -25,7 +25,7 @@ public class Spirit : MonoBehaviour
     private int scoreDown;
     private int scoreUpDevil;
 
-    private bool notAttack=false;//消滅時攻撃不可
+    [HideInInspector] public bool notAttack=false;//消滅時攻撃不可
 
     float scale = 1;//消滅時のスケール
 
@@ -283,7 +283,10 @@ public class Spirit : MonoBehaviour
         //スコア範囲に入ったらスコアを加算し、自身を削除
         if (collider.tag == "ScoreEria")
         {
-            
+           
+
+
+
             notAttack =true;//フラグをオンにして飛ばす動作を出来なく
               //サイズの変更
               scale += 0.005f;
@@ -291,9 +294,9 @@ public class Spirit : MonoBehaviour
 
             //透明度を減少させていく
             
-            GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.01f);
+            GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.05f);
 
-            if (GetComponent<SpriteRenderer>().color.a <= 20)
+            if (GetComponent<SpriteRenderer>().color.a <= 0)
             {
                 Buddhahood();
 
@@ -345,7 +348,11 @@ public class Spirit : MonoBehaviour
         //悪霊が悪魔にぶつかった時
         if (collider.tag == "Devil" && evil&&destroy)
         {
-            if (devil == null)
+            
+               
+
+
+                if (devil == null)
             {
                 devil = collider.gameObject.GetComponent<Devil>();//悪魔のスクリプト
             }
@@ -358,8 +365,8 @@ public class Spirit : MonoBehaviour
         //善の魂が悪霊に食われる時
         if (collider.tag == "Devil" && !evil)
         {
-            
-                devil = collider.gameObject.GetComponent<Devil>();//悪魔のスクリプト
+            audioSource.PlayOneShot(Se_soul);//SE
+            devil = collider.gameObject.GetComponent<Devil>();//悪魔のスクリプト
             
            
               
@@ -372,7 +379,7 @@ public class Spirit : MonoBehaviour
                     Destroy(gameObject);//消滅させる
 
 
-            audioSource.PlayOneShot(Se_soul);//SE
+            
 
         }
 
@@ -386,17 +393,22 @@ public class Spirit : MonoBehaviour
         }
 
 
+        //スコア範囲に入ったらスコアを加算し、自身を削除
+        if (collider.tag == "ScoreEria")
+        {
+            audioSource.PlayOneShot(Se_heaven);//SE
+           
+        }
 
 
 
+        }
 
-    } 
 
-
-    //時間差で削除
-    private void Buddhahood()
+        //時間差で削除
+        private void Buddhahood()
     {
-        audioSource.PlayOneShot(Se_heaven);//SE
+       
         //善人の時
         if (!evil)
         {

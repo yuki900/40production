@@ -101,7 +101,7 @@ public class Angel : MonoBehaviour
         {
             if (!atackFlag)
             {
-                audioSource.PlayOneShot(Se_kyoukougeki);//SE
+                audioSource.PlayOneShot(Se_kyoukougeki,0.5f);//SE
                 animator.SetBool("Atack", true);//アニメ変更処理
                 animator.SetBool("Move", false);//アニメ変更処理
                 atackFlag = true;
