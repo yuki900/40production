@@ -25,7 +25,7 @@ public class Spirit : MonoBehaviour
     private int scoreDown;
     private int scoreUpDevil;
 
-    private bool notAttack=false;//消滅時攻撃不可
+    [HideInInspector] public bool notAttack=false;//消滅時攻撃不可
 
     float scale = 1;//消滅時のスケール
 
@@ -283,7 +283,7 @@ public class Spirit : MonoBehaviour
         //スコア範囲に入ったらスコアを加算し、自身を削除
         if (collider.tag == "ScoreEria")
         {
-            audioSource.PlayOneShot(Se_heaven);//SE
+           
 
 
 
@@ -294,9 +294,9 @@ public class Spirit : MonoBehaviour
 
             //透明度を減少させていく
             
-            GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.01f);
+            GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.05f);
 
-            if (GetComponent<SpriteRenderer>().color.a <= 10)
+            if (GetComponent<SpriteRenderer>().color.a <= 0)
             {
                 Buddhahood();
 
@@ -393,7 +393,13 @@ public class Spirit : MonoBehaviour
         }
 
 
-       
+        //スコア範囲に入ったらスコアを加算し、自身を削除
+        if (collider.tag == "ScoreEria")
+        {
+            audioSource.PlayOneShot(Se_heaven);//SE
+           
+        }
+
 
 
         }
@@ -401,7 +407,7 @@ public class Spirit : MonoBehaviour
 
         //時間差で削除
         private void Buddhahood()
-         {
+    {
        
         //善人の時
         if (!evil)
