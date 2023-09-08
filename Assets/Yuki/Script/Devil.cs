@@ -146,10 +146,14 @@ public class Devil : MonoBehaviour
       
         devilGenerater.existenceFlag = false;//‚Ü‚½ˆ«–‚‚ðŒÄ‚×‚é‚æ‚¤‚É
         follFlag = true;
-        
+
+        Vector2 objectSize = new Vector2(0,0);
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        collider.size = objectSize;
+
     }
 
-    //ˆ«—ì‚ð‚Ô‚Â‚¯‚ç‚ê‚½Žž
+
     public void Eaten()
     {
       

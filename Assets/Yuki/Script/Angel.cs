@@ -322,6 +322,17 @@ public class Angel : MonoBehaviour
 
 
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
 
+        //•Ç‚É“–‚½‚Á‚½Žž
+        if (collider.tag == "DestroyEria")
+        {
+
+            transform.position = new Vector3(0, 0, 0);
+
+
+        }
+    }
 
 }
