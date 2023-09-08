@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Horikawa/Scenes/Title.unity
     guid: 0c5eeec349e9c4a4fa759c18c2d3519b
   - enabled: 1
-    path: Assets/Horikawa/Scenes/Make.unity
-    guid: c8ce4bf5b65a5b344a9b9f71bde17c38
+    path: Assets/Horikawa/Scenes/Instructions.unity
+    guid: fd47e6b8ec02f394583da981a6a22a1c
   m_configObjects: {}
