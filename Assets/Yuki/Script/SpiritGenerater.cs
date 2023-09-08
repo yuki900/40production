@@ -11,6 +11,10 @@ public class SpiritGenerater : MonoBehaviour
     [Header("生成する魂")]
     [SerializeField][Tooltip("善の魂のプレハブを入れる")] GameObject Sprit;//善魂
     [SerializeField][Tooltip("悪の魂のプレハブを入れる")] GameObject EvileSprit;//悪魂
+ 
+
+
+
 
     [Header("時間")]
     [SerializeField][Tooltip("魂を生成する時間間隔")] float generateTime;
@@ -22,10 +26,21 @@ public class SpiritGenerater : MonoBehaviour
     [SerializeField][Tooltip("生成する範囲")] float interval;//ジェネレータを中心とした左右の生成範囲
     [SerializeField][Tooltip("生成するy座標")] float y;//生成する高さ
 
+
+    [Header("スコアマネージャー")]
+    [SerializeField][Tooltip("スコアマネージャー")] ScoreManeger scoreManeger;//
+
+
+    private int SpritAmount = 3;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         timeCount = 0;//初期化
+
+        SpritAmount = 3; 
     }
 
     // Update is called once per frame
@@ -36,9 +51,28 @@ public class SpiritGenerater : MonoBehaviour
         //決められた時間置きに生成
         if (timeCount > generateTime)
         {
-            Generate();//関数を呼んで生成
-            Generate();//関数を呼んで生成
-            Generate();//関数を呼んで生成
+            if (scoreManeger.combo < 20)
+            {
+                SpritAmount = 3;
+            }
+
+
+            if (scoreManeger.combo > 20)
+            {
+                SpritAmount = 4;
+            }
+            if (scoreManeger.combo > 30)
+            {
+                SpritAmount = 5;
+            }
+
+
+
+            for (int i = 0; i < SpritAmount; i++)
+            {
+                Generate();//関数を呼んで生成
+               
+            }
 
             timeCount = 0;//カウンターはリセット
 

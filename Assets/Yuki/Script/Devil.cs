@@ -30,13 +30,16 @@ public class Devil : MonoBehaviour
 
     Animator animator;
 
+    AudioSource audioSource;
+    [SerializeField] AudioClip Se_Shot;//落下
+
     void Start()
     {
 
 
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        audioSource = GetComponent<AudioSource>();
 
         //ジェネレータを取得
         if (devilGenerater == null)
@@ -129,6 +132,7 @@ public class Devil : MonoBehaviour
 
         if (follFlag)
         {
+            audioSource.PlayOneShot(Se_Shot);//落下SE
             rigidbody.gravityScale = 1;//重力をオンにして落下させる
             animator.SetBool("Ded", true);//落下演出
             spirite.DevilEatReset();
@@ -146,10 +150,14 @@ public class Devil : MonoBehaviour
       
         devilGenerater.existenceFlag = false;//また悪魔を呼べるように
         follFlag = true;
-        
+
+        Vector2 objectSize = new Vector2(0,0);
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        collider.size = objectSize;
+
     }
 
-    //悪霊をぶつけられた時
+
     public void Eaten()
     {
       

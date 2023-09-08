@@ -43,6 +43,12 @@ public class Angel : MonoBehaviour
     [SerializeField][Tooltip("弱攻撃")] private GameObject minAtack;
     [SerializeField][Tooltip("強攻撃")] private GameObject atack;
 
+    AudioSource audioSource;
+    [Header("音源")]
+    [SerializeField] AudioClip Se_kyoukougeki;//強い攻撃
+    [SerializeField] AudioClip Se_jyakukougeki;//弱い攻撃
+
+
     new Rigidbody2D rigidbody;
 
     Animator animator;
@@ -52,8 +58,8 @@ public class Angel : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
-        
 
 
         // イベントに関数を追加
@@ -70,6 +76,7 @@ public class Angel : MonoBehaviour
         {
             if (!atackFlag)
             {
+                audioSource.PlayOneShot(Se_jyakukougeki);//SE
                 animator.SetBool("MiniAtack", true);//アニメ変更処理
                 animator.SetBool("Move", false);//アニメ変更処理
                 atackFlag = true;
@@ -94,6 +101,7 @@ public class Angel : MonoBehaviour
         {
             if (!atackFlag)
             {
+                audioSource.PlayOneShot(Se_kyoukougeki);//SE
                 animator.SetBool("Atack", true);//アニメ変更処理
                 animator.SetBool("Move", false);//アニメ変更処理
                 atackFlag = true;
@@ -322,6 +330,17 @@ public class Angel : MonoBehaviour
 
 
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
 
+        //壁に当たった時
+        if (collider.tag == "DestroyEria")
+        {
+
+            transform.position = new Vector3(0, 0, 0);
+
+
+        }
+    }
 
 }
