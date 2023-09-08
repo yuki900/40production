@@ -7,7 +7,7 @@ public class SpiritGenerater : MonoBehaviour
     private float timeCount=0;//生成用カウント
 
 
-    //インスペクタに表示するもの
+    //インスペクタに表示
     [Header("生成する魂")]
     [SerializeField][Tooltip("善の魂のプレハブを入れる")] GameObject Sprit;//善魂
     [SerializeField][Tooltip("悪の魂のプレハブを入れる")] GameObject EvileSprit;//悪魂
@@ -57,7 +57,7 @@ public class SpiritGenerater : MonoBehaviour
         Vector3 posi = new Vector3(rnd,y, 0.0f);//生成位置を決定
 
         //魂の生成
-        int typeRnd = Random.Range(1, 100);//善悪どちらを生成するか決定
+        int typeRnd = Random.Range(0, 100);//善悪どちらを生成するか決定
 
         //乱数が善の魂生成数値以下なら、善の魂を生成
         //数値を超えている場合は悪の魂を生成

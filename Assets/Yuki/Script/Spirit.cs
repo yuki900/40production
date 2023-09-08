@@ -25,15 +25,20 @@ public class Spirit : MonoBehaviour
     private int scoreDown;
     private int scoreUpDevil;
 
+    private bool notAttack=false;//消滅時攻撃不可
+
+    float scale = 1;//消滅時のスケール
+
     //インスペクタ表示変数
     [Header("吹っ飛ばす力関係の設定項目")]
     [SerializeField][Tooltip("吹っ飛ばす力(弱)")] private float miniPower;//吹っ飛ばす力(弱)
     [SerializeField][Tooltip("吹っ飛ばす力(弱)")] private float power;//吹っ飛ばす力(強)
-    [SerializeField][Tooltip("オンにすると悪霊")] private bool evile = false;//悪人か善人か
+    [SerializeField][Tooltip("オンにすると悪霊")] private bool evil = false;//悪人か善人か
 
     [Header("速度")]
-    [SerializeField][Tooltip("最小速度")] private float minSpede;
-    [SerializeField][Tooltip("最大速度")] private float maxSpede;
+    [SerializeField][Tooltip("最小速度")] private float minSpeed;
+    [SerializeField][Tooltip("最大速度")] private float maxSpeed;
+
 
 
     private Angel angel;
@@ -70,7 +75,7 @@ public class Spirit : MonoBehaviour
 
         }
 
-        float rnd = Random.Range(minSpede, maxSpede);//速度を最小最大の範囲からランダムに決定
+        float rnd = Random.Range(minSpeed, maxSpeed);//速度を最小最大の範囲からランダムに決定
         speed = rnd;//実際の速度を代入
         goalPosition = new Vector2(gameObject.transform.position.x, yPosition);//魂が向かう位置を設定
 
@@ -81,11 +86,18 @@ public class Spirit : MonoBehaviour
         scoreDown = scoreManeger.scoreDown;
         scoreUpDevil = scoreManeger.scoreUpDevil;
 
-}
+
+        // イベントに関数を追加
+        InputManager.Instance.weakAttackEvent.AddListener(WeakAttackEvent);
+        InputManager.Instance.strongAttackEvent.AddListener(StrongAttackEvent);
+    }
 
     // Update is called once per frame
     void Update()
     {
+        goalPosition = new Vector2(gameObject.transform.position.x, yPosition);//魂が向かう位置を設定
+
+
         //光の範囲に居る時のみ上に上る
         //範囲外に行った場合は落ちる
         if (lightFlag && !eatStart)
@@ -110,26 +122,40 @@ public class Spirit : MonoBehaviour
 
 
             Transform objectTransform = gameObject.GetComponent<Transform>(); // ゲームオブジェクトのTransformコンポーネントを取得
-            objectTransform.position = Vector3.Lerp(objectTransform.position, devilPosition, speed*2 * Time.deltaTime); // 目的の位置に移動
+            objectTransform.position = Vector3.Lerp(objectTransform.position, devilPosition, speed*10 * Time.deltaTime); // 目的の位置に移動
         }
 
 
-        //はじく動作系
+        
+
+       
+
+    }
+
+    private void FixedUpdate()
+    {
+        eriaFlag = false;
+        lightFlag = false;
+    }
+
+    //弱攻撃
+    private void WeakAttackEvent()
+    {//はじく動作系
         //悪魔のひきよせ中は出来ない
 
         //弱い
-        if (Input.GetKeyDown("z") && eriaFlag&&!eatStart)
+        if (eriaFlag && !eatStart&&!notAttack)
         {
-            destroy=true;//消去用フラグ
+            destroy = true;//消去用フラグ
             rigidbody.gravityScale = 0;
 
             //向いてる方向に応じてはじかれる方向を変更
             //右
             if (angel.rightFlag)
             {
-             
+
                 rigidbody.AddForce(Vector2.right * miniPower, ForceMode2D.Force);
-               
+
 
             }
 
@@ -153,13 +179,24 @@ public class Spirit : MonoBehaviour
 
         }
 
+
+    }
+
+    //強攻撃処理
+     private void StrongAttackEvent()
+    {
+
         //強い仮
-        if (Input.GetKeyDown("x") && eriaFlag&&!eatStart)
+        if (eriaFlag && !eatStart&&!notAttack)
         {
             destroy = true;//消去用フラグ
             rigidbody.gravityScale = 1;//落下用に重力を操作
             speed = 0;
 
+
+            //コライダーのサイズを変更
+            CircleCollider2D collider = GetComponent<CircleCollider2D>();
+            collider.radius = 0.3f;
             //向いてる方向に応じてはじかれる方向を変更
             //右
             if (angel.rightFlag)
@@ -196,11 +233,12 @@ public class Spirit : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
-        eriaFlag = false;
-        lightFlag = false;
-    }
+
+
+
+
+
+
 
 
     //悪魔に引き寄せられる時の関数
@@ -244,53 +282,54 @@ public class Spirit : MonoBehaviour
         //スコア範囲に入ったらスコアを加算し、自身を削除
         if (collider.tag == "ScoreEria")
         {
-            //善人の時
-            if (!evile)
-            {
 
-                scoreManeger.score += scoreUp;//スコアを加算
-            }
-            //悪人の時
-            if (evile)
-            {
+            notAttack=true;//フラグをオンにして飛ばす動作を出来なく
+              //サイズの変更
+              scale += 0.005f;
+            transform.localScale = new Vector3(scale, scale, scale);
 
-                scoreManeger.score -= scoreDown;//スコアを減少
-                scoreManeger.miss++;//ダメージを受ける
-                scoreManeger.combo = 0;//コンボリセット
-                //マイナスの時は0に
-                if (scoreManeger.score < 0)
-                {
-                    scoreManeger.score = 0;
-                }
+            //透明度を減少させていく
+            
+            GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.01f);
+
+            if (GetComponent<SpriteRenderer>().color.a <= 0)
+            {
+                Buddhahood();
+
             }
-            Destroy(gameObject);
+
+           
 
         }
         //一度でも飛ばされたフラグがオンの時、スコアを変動させて自身を消去
-        if(collider.tag == "DestroyEria" && destroy)
+        if(collider.tag == "DestroyEria" )
         {
-            //悪人の時
-            if (evile)
+            if (destroy)
             {
-
-                scoreManeger.score += scoreUp;//スコアを加算
-                scoreManeger.combo++;//コンボ＋
-            }
-            
-            //善人の時
-            if (!evile)
-            {
-
-                scoreManeger.score -= scoreDown;//スコアを減少
-                scoreManeger.miss++;//ダメージを受ける
-                scoreManeger.combo = 0;//コンボリセット
-                //マイナスの時は0に
-                if (scoreManeger.score < 0)
+                //悪人の時
+                if (evil)
                 {
-                    scoreManeger.score = 0;
+
+                    scoreManeger.score += scoreUp;//スコアを加算
+                    scoreManeger.combo++;//コンボ＋
+                }
+
+                //善人の時
+                if (!evil)
+                {
+
+                    scoreManeger.score -= scoreDown;//スコアを減少
+                    scoreManeger.life--;//ダメージを受ける
+                    scoreManeger.combo = 0;//コンボリセット
+                                           //マイナスの時は0に
+                    if (scoreManeger.score < 0)
+                    {
+                        scoreManeger.score = 0;
+                    }
                 }
             }
-            Destroy(gameObject);
+            Destroy (gameObject);
+           
         }
 
     }
@@ -303,7 +342,7 @@ public class Spirit : MonoBehaviour
     {
         
         //悪霊が悪魔にぶつかった時
-        if (collider.tag == "Devil" && evile&&destroy)
+        if (collider.tag == "Devil" && evil&&destroy)
         {
             if (devil == null)
             {
@@ -311,26 +350,28 @@ public class Spirit : MonoBehaviour
             }
             if (devil != null)
             {
-                scoreManeger.score += scoreUpDevil;//スコアを加算
+                scoreManeger.score += scoreUpDevil* scoreManeger.magnification;//スコアを加算
                 devil.Damege();//落下関数を呼び出し
             }
         }
         //善の魂が悪霊に食われる時
-        if (collider.tag == "Devil" && !evile)
+        if (collider.tag == "Devil" && !evil)
         {
-            if (devil == null)
-            {
+            
                 devil = collider.gameObject.GetComponent<Devil>();//悪魔のスクリプト
-            }
-            if (devil != null)
-            {
-                devil.Eaten();
-            }
+            
+           
+              
 
-            scoreManeger.miss++;//ダメージを受ける
-            scoreManeger.combo=0;//コンボリセット
-          
-            Destroy(gameObject);//消滅させる
+                    devil.Eaten();
+
+                    scoreManeger.life--;//ダメージを受ける
+                    scoreManeger.combo = 0;//コンボリセット
+
+                    Destroy(gameObject);//消滅させる
+                
+            
+            
 
         }
 
@@ -351,7 +392,30 @@ public class Spirit : MonoBehaviour
     } 
 
 
+    //時間差で削除
+    private void Buddhahood()
+    {
+        //善人の時
+        if (!evil)
+        {
 
+            scoreManeger.score += scoreUp;//スコアを加算
+        }
+        //悪人の時
+        if (evil)
+        {
+
+            scoreManeger.score -= scoreDown;//スコアを減少
+            scoreManeger.life--;//ダメージを受ける
+            scoreManeger.combo = 0;//コンボリセット
+                                   //マイナスの時は0に
+            if (scoreManeger.score < 0)
+            {
+                scoreManeger.score = 0;
+            }
+        }
+        Destroy(gameObject);
+    }
 
 
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5015690314899132187}
   - component: {fileID: 5015690314899132184}
   - component: {fileID: 3595263896254151131}
+  - component: {fileID: 3341553112032169922}
   m_Layer: 0
   m_Name: EvilSpirit
   m_TagString: EvilSpirit
@@ -123,9 +124,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniPower: 30
   power: 400
-  evile: 1
-  minSpede: 0.1
-  maxSpede: 0.3
+  evil: 1
+  minSpeed: 0.08
+  maxSpeed: 0.12
 --- !u!58 &5015690314899132184
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -139,9 +140,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.046789013, y: -0.24504583}
+  m_Offset: {x: -0.04678905, y: -0.1402924}
   serializedVersion: 2
-  m_Radius: 0.37954125
+  m_Radius: 0.6293378
 --- !u!95 &3595263896254151131
 Animator:
   serializedVersion: 4
@@ -162,3 +163,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3341553112032169922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5015690314899132166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d57e1c4619cad4aacee31bef02d5a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

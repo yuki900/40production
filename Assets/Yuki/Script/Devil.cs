@@ -5,6 +5,11 @@ public class Devil : MonoBehaviour
 {
     private GameObject nearObj;         //最も近いオブジェクト
 
+
+    //インスペクタに表示
+    [Header("移動速度")]
+    [SerializeField]float moveSpeed;//速度
+    [Header("魂を食う間隔")]
     [SerializeField] private float time;//魂を食う間隔
 
 
@@ -13,10 +18,12 @@ public class Devil : MonoBehaviour
     private bool follFlag = false;//被弾フラグ
 
 
+    private bool moveFlag = false;//移動フラグ
 
 
 
 
+    DevilGenerater devilGenerater;
     private Spirit spirite;
 
     new Rigidbody2D rigidbody;
@@ -25,8 +32,24 @@ public class Devil : MonoBehaviour
 
     void Start()
     {
+
+
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+
+        //ジェネレータを取得
+        if (devilGenerater == null)
+        {
+
+            GameObject saveObject = GameObject.FindGameObjectWithTag("DevilGenerater");
+            devilGenerater = saveObject.GetComponent<DevilGenerater>();
+
+
+        }
+
+
+
 
         //最も近かったオブジェクトを取得
         nearObj = serchTag(gameObject, "Spirit");
@@ -37,11 +60,47 @@ public class Devil : MonoBehaviour
             spirite = nearObj.GetComponent<Spirit>();
         }
         animator.SetBool("Ded", false);//落下演出
+
+
+
+
+        devilGenerater.existenceFlag = true;//悪魔がすでに生成されているフラグを与える
+        moveFlag = true;//移動開始
     }
 
     // Update is called once per frame
     void Update()
     {
+       
+
+        if (moveFlag)
+        {
+
+            Vector2 goalPosition = new Vector2(0, 0);//魂が向かう位置を設定
+
+            //生成位置が右の時は右の位置に移動
+            if (gameObject.transform.position.x >= 0)
+            {
+                goalPosition = new Vector2(4, 0);//魂が向かう位置を設定
+
+            }
+            //生成位置が左の時は左の位置に移動
+            if (gameObject.transform.position.x < 0)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+                goalPosition = new Vector2(-4, 0);//魂が向かう位置を設定
+
+            }
+
+            Transform objectTransform = gameObject.GetComponent<Transform>(); // ゲームオブジェクトのTransformコンポーネントを取得
+            objectTransform.position = Vector3.Lerp(objectTransform.position, goalPosition, moveSpeed * Time.deltaTime); // 目的の位置に移動
+
+        }
+
+
+
+
+
         timeCount += Time.deltaTime;//時間を経過させる
       
         if (timeCount >= time)
@@ -84,6 +143,8 @@ public class Devil : MonoBehaviour
     //悪霊をぶつけられた時
     public void Damege()
     {
+      
+        devilGenerater.existenceFlag = false;//また悪魔を呼べるように
         follFlag = true;
         
     }
@@ -91,9 +152,10 @@ public class Devil : MonoBehaviour
     //悪霊をぶつけられた時
     public void Eaten()
     {
+      
         //アニメを変更して即戻す
         animator.SetBool("Eat", true);//アニメ変更処理
-        
+       
     }
 
 

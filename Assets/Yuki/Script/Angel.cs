@@ -34,10 +34,14 @@ public class Angel : MonoBehaviour
     private bool atackFlag=false;//攻撃フラグ
     private bool keyBlock=false;//連打防止用
 
-
-    //インスペクタ表示変数
+    [Header("速度")]
     [SerializeField][Tooltip("移動速度")] float moveSpeed = 8;//速度
- 
+
+
+
+    [Header("攻撃エフェクト")]
+    [SerializeField][Tooltip("弱攻撃")] private GameObject minAtack;
+    [SerializeField][Tooltip("強攻撃")] private GameObject atack;
 
     new Rigidbody2D rigidbody;
 
@@ -48,7 +52,66 @@ public class Angel : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        
+
+
+        // イベントに関数を追加
+        InputManager.Instance.weakAttackEvent.AddListener(WeakAttackEvent);
+        InputManager.Instance.strongAttackEvent.AddListener(StrongAttackEvent);
     }
+
+    //弱攻撃
+    void WeakAttackEvent()
+    {
+       
+        //攻撃アニメを表示
+        if (!keyBlock)
+        {
+            if (!atackFlag)
+            {
+                animator.SetBool("MiniAtack", true);//アニメ変更処理
+                animator.SetBool("Move", false);//アニメ変更処理
+                atackFlag = true;
+                keyBlock = true;
+
+                //プレハブをインスタンス化
+                GameObject AtackEfect = Instantiate(minAtack, transform);
+
+                AtackEfect.transform.localPosition = new Vector3(0, 0, 0);
+            
+
+            }
+        }
+
+    }
+
+
+    void StrongAttackEvent()
+    {
+       
+        if (!keyBlock)
+        {
+            if (!atackFlag)
+            {
+                animator.SetBool("Atack", true);//アニメ変更処理
+                animator.SetBool("Move", false);//アニメ変更処理
+                atackFlag = true;
+                keyBlock = true;
+
+                GameObject AtackEfect = Instantiate(atack, transform);
+
+                AtackEfect.transform.localPosition = new Vector3(0, 0, 0);
+             
+
+
+            }
+
+        }
+
+
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -59,29 +122,8 @@ public class Angel : MonoBehaviour
         
 
 
-        //攻撃アニメを表示
-        if (Input.GetKeyDown("z")&&!keyBlock)
-        {
-            if (!atackFlag)
-            {
-                animator.SetBool("MiniAtack", true);//アニメ変更処理
-                animator.SetBool("Move", false);//アニメ変更処理
-                atackFlag = true;
-                keyBlock = true;
-            }
-        }
+       
 
-        if (Input.GetKeyDown("x")&&!keyBlock)
-        {
-            if (!atackFlag)
-            {
-                animator.SetBool("Atack", true);//アニメ変更処理
-                animator.SetBool("Move", false);//アニメ変更処理
-                atackFlag = true;
-                keyBlock = true;
-            }
-            
-        }
 
 
         if (atackFlag)
@@ -103,12 +145,6 @@ public class Angel : MonoBehaviour
 
         keyBlock = false;
     }
-
-    void FixedUpdate()
-    {
-
-    }
-
 
 
     void Moveupdate()
