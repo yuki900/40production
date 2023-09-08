@@ -283,7 +283,7 @@ public class Spirit : MonoBehaviour
         //スコア範囲に入ったらスコアを加算し、自身を削除
         if (collider.tag == "ScoreEria")
         {
-            audioSource.PlayOneShot(Se_heaven);//SE
+            
             notAttack =true;//フラグをオンにして飛ばす動作を出来なく
               //サイズの変更
               scale += 0.005f;
@@ -293,7 +293,7 @@ public class Spirit : MonoBehaviour
             
             GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.01f);
 
-            if (GetComponent<SpriteRenderer>().color.a <= 0)
+            if (GetComponent<SpriteRenderer>().color.a <= 20)
             {
                 Buddhahood();
 
@@ -396,6 +396,7 @@ public class Spirit : MonoBehaviour
     //時間差で削除
     private void Buddhahood()
     {
+        audioSource.PlayOneShot(Se_heaven);//SE
         //善人の時
         if (!evil)
         {
