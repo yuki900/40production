@@ -23,7 +23,7 @@ public class SceneLoader : MonoBehaviour
 		StartCoroutine(LoadData());
 	}
 
-	IEnumerator LoadData()
+	private IEnumerator LoadData()
 	{
 		// ƒV[ƒ“‚Ì“Ç‚İ‚İ‚ğ‚·‚é
 		loadAsync = SceneManager.LoadSceneAsync(LoadSceneName);

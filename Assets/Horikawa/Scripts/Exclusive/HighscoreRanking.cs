@@ -50,6 +50,7 @@ public class HighscoreRanking : MonoBehaviour
         {
             yield return new WaitForSeconds(BLINK_INTERVAL);
             texts[_index].enabled = !texts[_index].enabled;
+            Debug.Log(texts[_index].enabled);
         }
     }
 }
